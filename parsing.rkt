@@ -5,7 +5,7 @@
 	(cond
 		[(empty? list) #f]
 		[(string=? ".>>>" string_to_parse) #t]
-		[else (should-parse? (list->string (cdr list)))]))
+		[else (should-parse? (list->string (rest list)))]))
 
 
 (provide should-parse?)
