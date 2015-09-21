@@ -1,4 +1,5 @@
 #lang racket
+(require racket/date)
 
 (define (should-parse? string_to_parse)
   (define list (string->list string_to_parse))
@@ -34,5 +35,13 @@
   	[(not (equal? #f (member (string-downcase (first words)) timing-words))) #t]
   	[else (contains-timing?recursive (rest words))]))
 
+(define (date-of-reminder reminder)
+	(if (contains-timing? reminder)
+		(struct-copy date (current-date) [hour (extract-hour reminder)])
+		#f ))
 
-(provide should-parse? contains-timing?)
+(define (extract-hour reminder)
+	(string->number (last (string-split reminder))))
+
+
+(provide should-parse? contains-timing? date-of-reminder)
