@@ -25,7 +25,9 @@
    "venerdì"
    "venerdi"
    "sabato"
-   "domenica"))
+   "domenica"
+   "oggi"
+   "domani"))
 
 (define (contains-timing? string)
   (contains-timing?recursive (reverse (string-split string))))
@@ -33,15 +35,20 @@
 (define (contains-timing?recursive words)
   (cond
     [(empty? words) #f]
-    [(not (equal? #f (member (string-downcase (first words)) timing-words))) #t]
+    [(is-timing-word? (first words)) #t]
     [else (contains-timing?recursive (rest words))]))
+
+(define (is-timing-word? word)
+  (member (string-downcase word) timing-words))
 
 (define (date-of-reminder reminder current-date)
   (if (contains-timing? reminder)
       (struct-copy date current-date
                    [hour (extract-hour reminder)]
                    [minute (extract-minute reminder)]
-                   [second (extract-second reminder)])
+                   [second (extract-second reminder)]
+                   [week-day (extract-week-day reminder current-date)]
+                   [day (extract-day reminder current-date)])
       #f ))
 
 (define (extract-hour reminder)
@@ -52,6 +59,29 @@
 
 (define (extract-second reminder)
   0)
+
+(define (extract-week-day reminder current-date)
+  (define day (first-timing-word reminder))
+  (cond
+    [(string=? day "domani") (add1 (date-week-day current-date))]
+    [else (date-week-day current-date)]))
+
+(define (extract-day reminder current-date)
+  (define day (first-timing-word reminder))
+  (cond
+    [(string=? day "domani") (add1 (date-day current-date))]
+    [else (date-day current-date)]))
+
+(define (first-timing-word reminder)
+  (first-timing-word-recursive (string-split reminder)))
+
+(define (first-timing-word-recursive words)
+  (cond
+    [(empty? words) #f]
+    [(is-timing-word? (first words)) (first words)]
+    [else (first-timing-word-recursive (rest words))]))
+
+
 
 
 (provide should-parse? contains-timing? date-of-reminder)
