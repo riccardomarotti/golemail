@@ -36,9 +36,14 @@
     		"exact day and hour"
             (define current-date (seconds->date 1442851540)) ;"Monday, September 21st, 2015 6:05:40pm"
 
-    		(define 21time (date-of-reminder "oggi alle 21" current-date))
-    		(check-equal? (date-hour 21time) 21)
-       		(check-equal? (date-week-day 21time) 1)
+    		(define 17time (date-of-reminder "oggi alle 17" current-date))
+    		(check-equal? (date-hour 17time) 17)
+    		(check-equal? (date-minute 17time) 0)
+    		(check-equal? (date-second 17time) 0)
+       		(check-equal? (date-week-day 17time) 1)
+       		(check-equal? (date-day 17time) 21)
+       		(check-equal? (date-month 17time) 9)
+       		(check-equal? (date-year 17time) 2015)
 
     		(define 22time (date-of-reminder "oggi alle 22" current-date))
     		(check-equal? (date-hour 22time) 22))

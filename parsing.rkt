@@ -37,11 +37,20 @@
 
 (define (date-of-reminder reminder current-date)
 	(if (contains-timing? reminder)
-		(struct-copy date current-date [hour (extract-hour reminder)])
+		(struct-copy date current-date
+                     [hour (extract-hour reminder)]
+                     [minute (extract-minute reminder)]
+                     [second (extract-second reminder)])
 		#f ))
 
 (define (extract-hour reminder)
 	(string->number (last (string-split reminder))))
+
+(define (extract-minute reminder)
+  0)
+
+(define (extract-second reminder)
+  0)
 
 
 (provide should-parse? contains-timing? date-of-reminder)
