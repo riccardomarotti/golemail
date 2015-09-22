@@ -6,47 +6,53 @@
 
 (define all
   (list
-    (test-suite
-      "subject parsing"
-      (test-equal? "empty string" (should-parse? "") #f)
-      (test-equal? "string with no keyword" (should-parse? "any string") #f)
-      (test-equal? "string with keyword not as last" (should-parse? ".>>> and anything else") #f)
-      (test-equal? "string with keyword as last" (should-parse? "anything ending with .>>>") #t))
-
-    (test-suite
-      "finding timing expressions"
-      (check-false (contains-timing? ""))
-      (check-false (contains-timing? "any non timing string"))
-      (check-true (contains-timing? "any text tra un'ora"))
-      (check-true (contains-timing? "any text alle 10"))
-      (check-true (contains-timing? "any text il 10 settembre"))
-      (check-true (contains-timing? "any text lunedì"))
-      (check-true (contains-timing? "any text MercolEdi"))
-      (check-true (contains-timing? "any text sabato alle 17")))
-
-    (test-suite
-    	"understanding timing expressions"
-    	; #:before (λ() (define current-date (seconds->date 1442851540))) ;"Monday, September 21st, 2015 6:05:40pm"
-    	(test-case
-    		"no timing string"
-    		(check-equal? (date-of-reminder "" "any date") #f)
-    		(check-equal? (date-of-reminder "any non timing string" "any date") #f))
-
-    	(test-case
-    		"exact day and hour"
-            (define current-date (seconds->date 1442851540)) ;"Monday, September 21st, 2015 6:05:40pm"
-
-    		(define 17time (date-of-reminder "oggi alle 17" current-date))
-    		(check-equal? (date-hour 17time) 17)
-    		(check-equal? (date-minute 17time) 0)
-    		(check-equal? (date-second 17time) 0)
-       		(check-equal? (date-week-day 17time) 1)
-       		(check-equal? (date-day 17time) 21)
-       		(check-equal? (date-month 17time) 9)
-       		(check-equal? (date-year 17time) 2015)
-
-    		(define 22time (date-of-reminder "oggi alle 22" current-date))
-    		(check-equal? (date-hour 22time) 22))
+   (test-suite
+    "subject parsing"
+    (test-equal? "empty string" (should-parse? "") #f)
+    (test-equal? "string with no keyword" (should-parse? "any string") #f)
+    (test-equal? "string with keyword not as last" (should-parse? ".>>> and anything else") #f)
+    (test-equal? "string with keyword as last" (should-parse? "anything ending with .>>>") #t))
+   
+   (test-suite
+    "finding timing expressions"
+    (check-false (contains-timing? ""))
+    (check-false (contains-timing? "any non timing string"))
+    (check-true (contains-timing? "any text tra un'ora"))
+    (check-true (contains-timing? "any text alle 10"))
+    (check-true (contains-timing? "any text il 10 settembre"))
+    (check-true (contains-timing? "any text lunedì"))
+    (check-true (contains-timing? "any text MercolEdi"))
+    (check-true (contains-timing? "any text sabato alle 17")))
+   
+   (test-suite
+    "understanding timing expressions"
+    ; #:before (λ() (define current-date (seconds->date 1442851540))) ;"Monday, September 21st, 2015 6:05:40pm"
+    (test-case
+     "no timing string"
+     (check-equal? (date-of-reminder "" "any date") #f)
+     (check-equal? (date-of-reminder "any non timing string" "any date") #f))
+    
+    (test-case
+     "today"
+     (define current-date (seconds->date 1442851540)) ;"Monday, September 21st, 2015 6:05:40pm"
+     
+     (define 17time (date-of-reminder "oggi alle 17" current-date))
+     (check-equal? (date-hour 17time) 17)
+     (check-equal? (date-minute 17time) 0)
+     (check-equal? (date-second 17time) 0)
+     (check-equal? (date-week-day 17time) 1)
+     (check-equal? (date-day 17time) 21)
+     (check-equal? (date-month 17time) 9)
+     (check-equal? (date-year 17time) 2015)
+     
+     (define 22time (date-of-reminder "oggi alle 22" current-date))
+     (check-equal? (date-hour 22time) 22))
+    
+    (test-case
+     "tomorrow"
+     ;          (define current-date (seconds->date 1442948973)) ;"Tuesday, September 22nd, 2015 9:09:33pm"
+     
+     )
     )))
 
 (for-each run-tests all)

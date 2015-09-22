@@ -1,4 +1,5 @@
 #lang racket
+
 (require racket/date)
 
 (define (should-parse? string_to_parse)
@@ -10,41 +11,41 @@
 
 (define timing-words
   (list
-    "tra"
-    "alle"
-    "il"
-    "lunedì"
-    "lunedi"
-    "martedì"
-    "martedi"
-    "mercoledì"
-    "mercoledi"
-    "giovedì"
-    "giovedi"
-    "venerdì"
-    "venerdi"
-    "sabato"
-    "domenica"))
+   "tra"
+   "alle"
+   "il"
+   "lunedì"
+   "lunedi"
+   "martedì"
+   "martedi"
+   "mercoledì"
+   "mercoledi"
+   "giovedì"
+   "giovedi"
+   "venerdì"
+   "venerdi"
+   "sabato"
+   "domenica"))
 
 (define (contains-timing? string)
-	(contains-timing?recursive (reverse (string-split string))))
+  (contains-timing?recursive (reverse (string-split string))))
 
 (define (contains-timing?recursive words)
   (cond
-  	[(empty? words) #f]
-  	[(not (equal? #f (member (string-downcase (first words)) timing-words))) #t]
-  	[else (contains-timing?recursive (rest words))]))
+    [(empty? words) #f]
+    [(not (equal? #f (member (string-downcase (first words)) timing-words))) #t]
+    [else (contains-timing?recursive (rest words))]))
 
 (define (date-of-reminder reminder current-date)
-	(if (contains-timing? reminder)
-		(struct-copy date current-date
-                     [hour (extract-hour reminder)]
-                     [minute (extract-minute reminder)]
-                     [second (extract-second reminder)])
-		#f ))
+  (if (contains-timing? reminder)
+      (struct-copy date current-date
+                   [hour (extract-hour reminder)]
+                   [minute (extract-minute reminder)]
+                   [second (extract-second reminder)])
+      #f ))
 
 (define (extract-hour reminder)
-	(string->number (last (string-split reminder))))
+  (string->number (last (string-split reminder))))
 
 (define (extract-minute reminder)
   0)
