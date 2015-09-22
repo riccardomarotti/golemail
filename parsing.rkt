@@ -35,9 +35,9 @@
   	[(not (equal? #f (member (string-downcase (first words)) timing-words))) #t]
   	[else (contains-timing?recursive (rest words))]))
 
-(define (date-of-reminder reminder)
+(define (date-of-reminder reminder current-date)
 	(if (contains-timing? reminder)
-		(struct-copy date (current-date) [hour (extract-hour reminder)])
+		(struct-copy date current-date [hour (extract-hour reminder)])
 		#f ))
 
 (define (extract-hour reminder)

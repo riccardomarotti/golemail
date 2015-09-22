@@ -28,18 +28,20 @@
     	"understanding timing expressions"
     	; #:before (λ() (define current-date (seconds->date 1442851540))) ;"Monday, September 21st, 2015 6:05:40pm"
     	(test-case
-    		"empty string"
-    		(check-equal? #f (date-of-reminder "")))
+    		"no timing string"
+    		(check-equal? (date-of-reminder "" "any date") #f)
+    		(check-equal? (date-of-reminder "any non timing string" "any date") #f))
 
     	(test-case
     		"exact day and hour"
-    		(define current-date (seconds->date 1442851540)) ;"Monday, September 21st, 2015 6:05:40pm"
+            (define current-date (seconds->date 1442851540)) ;"Monday, September 21st, 2015 6:05:40pm"
 
-    		(define 21time (date-of-reminder "oggi alle 21"))
-    		(check-equal? 21 (date-hour 21time))
+    		(define 21time (date-of-reminder "oggi alle 21" current-date))
+    		(check-equal? (date-hour 21time) 21)
+       		(check-equal? (date-week-day 21time) 1)
 
-    		(define 22time (date-of-reminder "oggi alle 22"))
-    		(check-equal? 22 (date-hour 22time)))
+    		(define 22time (date-of-reminder "oggi alle 22" current-date))
+    		(check-equal? (date-hour 22time) 22))
     )))
 
-(map run-tests all)
+(for-each run-tests all)
