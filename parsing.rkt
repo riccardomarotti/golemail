@@ -29,20 +29,20 @@
    "oggi"
    "domani"))
 
-(define (contains-timing? string)
-  (contains-timing?recursive (reverse (string-split string))))
+(define (extract-timing string)
+  (extract-timing-recursive (reverse (string-split string)) (list)))
 
-(define (contains-timing?recursive words)
+(define (extract-timing-recursive words timing-words)
   (cond
     [(empty? words) #f]
-    [(is-timing-word? (first words)) #t]
-    [else (contains-timing?recursive (rest words))]))
+    [(is-timing-word? (first words)) (string-join (cons (first words) timing-words))]
+    [else (extract-timing-recursive (rest words) (cons (first words) timing-words))]))
 
 (define (is-timing-word? word)
   (member (string-downcase word) timing-words))
 
 (define (date-of-reminder reminder current-date)
-  (if (contains-timing? reminder)
+  (if (extract-timing reminder)
       (struct-copy date current-date
                    [hour (extract-hour reminder)]
                    [minute (extract-minute reminder)]
@@ -63,7 +63,7 @@
     [(empty? (rest time-list)) (string->number (first time-list))]
     [else (get-minutes (rest time-list))]))
 
-  
+
 
 (define (extract-second reminder)
   0)
@@ -92,4 +92,4 @@
 
 
 
-(provide should-parse? contains-timing? date-of-reminder)
+(provide should-parse? extract-timing date-of-reminder)

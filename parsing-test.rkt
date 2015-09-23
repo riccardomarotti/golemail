@@ -15,16 +15,16 @@
 
    (test-suite
     "finding timing expressions"
-    (check-false (contains-timing? ""))
-    (check-false (contains-timing? "any non timing string"))
-    (check-true (contains-timing? "any text tra un'ora"))
-    (check-true (contains-timing? "any text alle 10"))
-    (check-true (contains-timing? "any text il 10 settembre"))
-    (check-true (contains-timing? "any text lunedì"))
-    (check-true (contains-timing? "any text MercolEdi"))
-    (check-true (contains-timing? "any text oggi"))
-    (check-true (contains-timing? "any text domaNi"))
-    (check-true (contains-timing? "any text sabato alle 17")))
+    (check-false (extract-timing ""))
+    (check-false (extract-timing "any non timing string"))
+    (check-equal? "tra un'ora" (extract-timing "any text tra un'ora"))
+    (check-equal? "alle 10" (extract-timing "any text alle 10"))
+    (check-equal? "il 10 settembre" (extract-timing "any text il 10 settembre"))
+    (check-equal? "lunedì" (extract-timing "any text lunedì"))
+    (check-equal? "MercolEdi" (extract-timing "any text MercolEdi"))
+    (check-equal? "oggi" (extract-timing "any text oggi"))
+    (check-equal? "domaNi" (extract-timing "any text domaNi"))
+    (check-equal? "sabato alle 17" (extract-timing "any text sabato alle 17")))
 
    (test-suite
     "understanding timing expressions"
@@ -59,16 +59,22 @@
      (check-equal? (date-second a-time) 0)
      (check-equal? (date-week-day a-time) 3)
      (check-equal? (date-day a-time) 23))
-    
+
     (test-case
      "more precise time"
      (define current-date (seconds->date 1443006675)) ;"Wednesday, September 23rd, 2015 1:11:15pm"
-     
+
      (define calculated-time (date-of-reminder "alle 12:37" current-date))
      (check-equal? (date-hour calculated-time) 12)
      (check-equal? (date-minute calculated-time) 37)
      (check-equal? (date-second calculated-time) 0)
      (check-equal? (date-day calculated-time) 23))
-    )))
 
+    ; (test-case
+    ;  "in X hours/minutes"
+    ;  (define current-date (seconds->date 1443037023)) ;"Wednesday, September 23rd, 2015 9:37:48pm"
+    ;  (define calculated-time (date-of-reminder "tra 32 minuti" current-date))
+    ;  (check-equal? (date-hour calculated-time) 22)
+    ;  )
+    )))
 (for-each run-tests all)
