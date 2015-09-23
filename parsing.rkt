@@ -52,10 +52,18 @@
       #f ))
 
 (define (extract-hour reminder)
-  (string->number (last (string-split reminder))))
+  (string->number (first (string-split (last (string-split reminder)) ":"))))
 
 (define (extract-minute reminder)
-  0)
+  (get-minutes (rest (string-split reminder ":"))))
+
+(define (get-minutes time-list)
+  (cond
+    [(empty? time-list) 0]
+    [(empty? (rest time-list)) (string->number (first time-list))]
+    [else (get-minutes (rest time-list))]))
+
+  
 
 (define (extract-second reminder)
   0)

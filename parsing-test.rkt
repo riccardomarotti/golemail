@@ -58,9 +58,17 @@
      (check-equal? (date-minute a-time) 0)
      (check-equal? (date-second a-time) 0)
      (check-equal? (date-week-day a-time) 3)
-     (check-equal? (date-day a-time) 23)
-
-     )
+     (check-equal? (date-day a-time) 23))
+    
+    (test-case
+     "more precise time"
+     (define current-date (seconds->date 1443006675)) ;"Wednesday, September 23rd, 2015 1:11:15pm"
+     
+     (define calculated-time (date-of-reminder "alle 12:37" current-date))
+     (check-equal? (date-hour calculated-time) 12)
+     (check-equal? (date-minute calculated-time) 37)
+     (check-equal? (date-second calculated-time) 0)
+     (check-equal? (date-day calculated-time) 23))
     )))
 
 (for-each run-tests all)
