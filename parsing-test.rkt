@@ -17,7 +17,8 @@
     "finding timing expressions"
     (check-false (extract-timing ""))
     (check-false (extract-timing "any non timing string"))
-    (check-equal? (extract-timing "any text tra un'ora") "tra un'ora")
+    (check-equal? (extract-timing "any text tra 1 ora") "tra 1 ora")
+    (check-equal? (extract-timing "any text tra 10 ore") "tra 10 ore")
     (check-equal? (extract-timing "any text alle 10") "alle 10")
     (check-equal? (extract-timing "any text il 10 settembre") "il 10 settembre")
     (check-equal? (extract-timing "any text lunedì") "lunedì")
