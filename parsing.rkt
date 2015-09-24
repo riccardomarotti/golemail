@@ -2,31 +2,12 @@
 
 (require racket/date)
 
-(define timing-words
-  (list
-   "tra"
-   "alle"
-   "il"
-   "lunedì"
-   "lunedi"
-   "martedì"
-   "martedi"
-   "mercoledì"
-   "mercoledi"
-   "giovedì"
-   "giovedi"
-   "venerdì"
-   "venerdi"
-   "sabato"
-   "domenica"
-   "oggi"
-   "domani"))
 
 (define (get-reminder-string string_to_parse)
   (define result (regexp-match "(.*)\\.>>>$" string_to_parse))
   (and result (second result)))
 
-(define day-regexp
+(define week-day-regexp
   "(?i:luned[iì]|marted[iì]|mercoled[iì]|gioved[iì]|venerd[iì]|sabato|domenica|oggi|domani|dopodomani)")
 
 (define hour-regexp "(?:([0-2]?[0-9]):)?([0-5]?[0-9])")
@@ -36,10 +17,10 @@
   (list
    "tra +([0-9]+) +minuti *$"
    "tra +([0-9]+) +or[ae] *$"
-   (~a day-regexp " +alle +" hour-regexp)
+   (~a week-day-regexp " +alle +" hour-regexp)
    (~a "alle +" hour-regexp)
    (~a "il +([0-9]+) +" month-regexp)
-   day-regexp))
+   week-day-regexp))
 
 (define timing-regexp (string-join timing-regexps "|"))
 
@@ -47,15 +28,6 @@
 (define (extract-timing string)
   (define result (regexp-match timing-regexp string))
   (and result (first result)))
-
-(define (extract-timing-recursive words timing-words)
-  (cond
-   [(empty? words) #f]
-   [(is-timing-word? (first words)) (string-join (cons (first words) timing-words))]
-   [else (extract-timing-recursive (rest words) (cons (first words) timing-words))]))
-
-(define (is-timing-word? word)
-  (member (string-downcase word) timing-words))
 
 (define (date-of-reminder reminder current-date)
   (if (extract-timing reminder)
@@ -85,25 +57,22 @@
   0)
 
 (define (extract-week-day reminder current-date)
-  (define day (first-timing-word reminder))
+  (define matches (regexp-match week-day-regexp reminder))
+  (define day (and matches (first matches)))
   (cond
-   [(string=? day "domani") (add1 (date-week-day current-date))]
+   [(equal? day "domani") (add1 (date-week-day current-date))]
    [else (date-week-day current-date)]))
 
 (define (extract-day reminder current-date)
-  (define day (first-timing-word reminder))
+  (define matches (regexp-match week-day-regexp reminder))
+  (define day (and matches (first matches)))
   (cond
-   [(string=? day "domani") (add1 (date-day current-date))]
+   [(equal? day "domani") (add1 (date-day current-date))]
    [else (date-day current-date)]))
 
 (define (first-timing-word reminder)
-  (first-timing-word-recursive (string-split reminder)))
+  (second (regexp-match timing-regexp reminder)))
 
-(define (first-timing-word-recursive words)
-  (cond
-   [(empty? words) #f]
-   [(is-timing-word? (first words)) (first words)]
-   [else (first-timing-word-recursive (rest words))]))
 
 
 
