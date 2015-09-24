@@ -5,7 +5,7 @@
          "parsing.rkt")
 
 (define all
-  (list
+(list
    (test-suite
     "subject parsing"
     (test-equal? "empty string" (get-reminder-string "") #f)
