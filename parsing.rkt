@@ -2,7 +2,7 @@
 
 (require racket/date)
 
-(define (should-parse? string_to_parse)
+(define (get-reminder-string string_to_parse)
   (define result (regexp-match "(.*)\\.>>>$" string_to_parse))
   (and result (second result)))
 
@@ -90,4 +90,4 @@
 
 
 
-(provide should-parse? extract-timing date-of-reminder)
+(provide get-reminder-string extract-timing date-of-reminder)
