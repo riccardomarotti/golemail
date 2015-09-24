@@ -17,14 +17,14 @@
     "finding timing expressions"
     (check-false (extract-timing ""))
     (check-false (extract-timing "any non timing string"))
-    (check-equal? "tra un'ora" (extract-timing "any text tra un'ora"))
-    (check-equal? "alle 10" (extract-timing "any text alle 10"))
-    (check-equal? "il 10 settembre" (extract-timing "any text il 10 settembre"))
-    (check-equal? "lunedì" (extract-timing "any text lunedì"))
-    (check-equal? "MercolEdi" (extract-timing "any text MercolEdi"))
-    (check-equal? "oggi" (extract-timing "any text oggi"))
-    (check-equal? "domaNi" (extract-timing "any text domaNi"))
-    (check-equal? "sabato alle 17" (extract-timing "any text sabato alle 17")))
+    (check-equal? (extract-timing "any text tra un'ora") "tra un'ora")
+    (check-equal? (extract-timing "any text alle 10") "alle 10")
+    (check-equal? (extract-timing "any text il 10 settembre") "il 10 settembre")
+    (check-equal? (extract-timing "any text lunedì") "lunedì")
+    (check-equal? (extract-timing "any text MercolEdi") "MercolEdi")
+    (check-equal? (extract-timing "any text oggi") "oggi")
+    (check-equal? (extract-timing "any text domaNi") "domaNi")
+    (check-equal? (extract-timing "any text sabato alle 17") "sabato alle 17"))
 
    (test-suite
     "understanding timing expressions"
