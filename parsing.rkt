@@ -32,18 +32,18 @@
 (define (date-of-reminder reminder current-date)
   (if (extract-timing reminder)
       (struct-copy date current-date
-                   [hour (extract-hour reminder)]
+                   [hour (extract-hour reminder current-date)]
                    [minute (extract-minute reminder)]
                    [second (extract-second reminder)]
                    [week-day (extract-week-day reminder current-date)]
                    [day (extract-day reminder current-date)])
     #f ))
 
-(define (extract-hour reminder)
+(define (extract-hour reminder current-date)
   (define matches (regexp-match hour-regexp reminder))
   (if matches
     (string->number (first (filter (lambda(x) (not (equal? #f x))) (rest matches))))
-    0))
+    (date-hour current-date)))
 
 
 (define (extract-minute reminder)

@@ -10,10 +10,15 @@
   (list
    (test-suite
     "time extraction"
-    (check-equal? (extract-hour "any string") 0)
-    (check-equal? (extract-hour "10:30") 10)
-    (check-equal? (extract-hour "23") 23)
-    (check-equal? (extract-hour "32  minuti") 0)
+    (test-case
+     "extract-hout"
+     (define current-date (seconds->date 1443191395));"Friday, September 25th, 2015 4:29:55pm"
+
+     (check-equal? (extract-hour "any string" current-date) 16)
+     (check-equal? (extract-hour "10:30" current-date) 10)
+     (check-equal? (extract-hour "23" current-date) 23)
+     (check-equal? (extract-hour "32  minuti" current-date) 16)
+    )
 
     (check-equal? (extract-minute "any non timing string") 0)
     (check-equal? (extract-minute "10:30") 30)
@@ -86,12 +91,12 @@
      (check-equal? (date-second calculated-time) 0)
      (check-equal? (date-day calculated-time) 23))
 
-    ; (test-case
-    ;  "in X hours/minutes"
-    ;  (define current-date (seconds->date 1443037023)) ;"Wednesday, September 23rd, 2015 9:37:48pm"
-    ;  (define calculated-time (date-of-reminder "tra 32 minuti" current-date))
-    ;  (check-equal? (date-hour calculated-time) 22)
-    ;  )
+    (test-case
+     "in X hours/minutes"
+     (define current-date (seconds->date 1443037023)) ;"Wednesday, September 23rd, 2015 9:37:48pm"
+     (define calculated-time (date-of-reminder "tra 32 minuti" current-date))
+     (check-equal? (date-hour calculated-time) 22)
+     )
     )))
 
 (for-each run-tests all)
