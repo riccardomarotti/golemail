@@ -11,6 +11,7 @@
   "(?i:luned[iì]|marted[iì]|mercoled[iì]|gioved[iì]|venerd[iì]|sabato|domenica|oggi|domani|dopodomani)")
 
 (define hour-regexp "(?:([0-2]?[0-9]):)?([0-5]?[0-9])")
+(define minute-regexp "[0-2]?[0-9]:([0-5]?[0-9])")
 (define month-regexp "(?i:gennaio|febbraio|marzo|aprile|maggio|giugno|luglio|agosto|settembre|ottobre|novembre|dicembre)")
 
 (define timing-regexps
@@ -50,15 +51,8 @@
     [else (first elements)]))
 
 (define (extract-minute reminder)
-  (get-minutes (rest (string-split reminder ":"))))
-
-(define (get-minutes time-list)
-  (cond
-   [(empty? time-list) 0]
-   [(empty? (rest time-list)) (string->number (first time-list))]
-   [else (get-minutes (rest time-list))]))
-
-
+  (define matches (regexp-match minute-regexp reminder))
+  (if matches (string->number (last matches)) 0))
 
 (define (extract-second reminder)
   0)
