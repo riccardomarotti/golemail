@@ -50,7 +50,7 @@
   (define matches (regexp-match minute-regexp reminder))
   (define operation
     (cond
-     [(regexp-match ".*tra.*" reminder) +]
+     [(regexp-match ".*tra.*" reminder) (λ(x y) (remainder (+ x y) 60))]
      [else (λ(x y) y)]))
 
   (if matches (operation (date-minute current-date) (string->number (last (remove* '(#f) matches)))) 0))

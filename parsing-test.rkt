@@ -102,6 +102,11 @@
      (define calculated-time (date-of-reminder "tra 12 minuti" current-date))
      (check-equal? (date-hour calculated-time) 21)
      (check-equal? (date-minute calculated-time) 49)
+     (check-equal? (date-day calculated-time) 23)
+
+     (define calculated-time2 (date-of-reminder "tra 23 minuti" current-date))
+     (check-equal? (date-hour calculated-time2) 22)
+     (check-equal? (date-minute calculated-time2) 0)
      )
     )))
 
