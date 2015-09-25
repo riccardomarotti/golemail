@@ -2,7 +2,6 @@
 
 (require racket/date)
 
-
 (define (get-reminder-string string_to_parse)
   (define result (regexp-match "(.*)\\.>>>$" string_to_parse))
   (and result (second result)))
@@ -42,13 +41,9 @@
 
 (define (extract-hour reminder)
   (define matches (regexp-match hour-regexp reminder))
-  (and matches (string->number (first-not-false (rest matches)))))
+  (and matches
+    (string->number (first (filter (lambda(x) (not (equal? #f x))) (rest matches))))))
 
-(define (first-not-false elements)
-  (cond
-    [(empty? elements) #f]
-    [(equal? #f (first elements)) (first-not-false (rest elements))]
-    [else (first elements)]))
 
 (define (extract-minute reminder)
   (define matches (regexp-match minute-regexp reminder))
