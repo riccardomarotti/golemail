@@ -11,20 +11,24 @@
    (test-suite
     "time extraction"
     (test-case
-     "extract-hout"
+     "extract-hour"
      (define current-date (seconds->date 1443191395));"Friday, September 25th, 2015 4:29:55pm"
 
      (check-equal? (extract-hour "any string" current-date) 16)
      (check-equal? (extract-hour "10:30" current-date) 10)
      (check-equal? (extract-hour "23" current-date) 23)
-     (check-equal? (extract-hour "32  minuti" current-date) 16)
-    )
+     (check-equal? (extract-hour "32  minuti" current-date) 16))
 
-    (check-equal? (extract-minute "any non timing string") 0)
-    (check-equal? (extract-minute "10:30") 30)
-    (check-equal? (extract-minute "9") 0)
+    (test-case
+     "extract-minute"
+     (define current-date (seconds->date 1443191395));"Friday, September 25th, 2015 4:29:55pm"
 
-    (check-equal? (extract-second "any string") 0))
+     (check-equal? (extract-minute "any non timing string" current-date) 0)
+     (check-equal? (extract-minute "10:30" current-date) 30)
+     (check-equal? (extract-minute "9" current-date) 0)
+     (check-equal? (extract-minute "tra 5 minuti" current-date) 34)
+
+     (check-equal? (extract-second "any string") 0)))
 
    (test-suite
     "subject parsing"
@@ -39,6 +43,7 @@
     (check-false (extract-timing "any non timing string"))
     (check-equal? (extract-timing "any text tra 1 ora") "tra 1 ora")
     (check-equal? (extract-timing "any text tra 10 ore") "tra 10 ore")
+    (check-equal? (extract-timing "any text tra 7 minuti") "tra 7 minuti")
     (check-equal? (extract-timing "any text alle 10") "alle 10")
     (check-equal? (extract-timing "any text il 10 settembre") "il 10 settembre")
     (check-equal? (extract-timing "any text lunedì") "lunedì")
@@ -94,10 +99,11 @@
     (test-case
      "in X hours/minutes"
      (define current-date (seconds->date 1443037023)) ;"Wednesday, September 23rd, 2015 9:37:48pm"
-     (define calculated-time (date-of-reminder "tra 32 minuti" current-date))
-     (check-equal? (date-hour calculated-time) 22)
+     (define calculated-time (date-of-reminder "tra 12 minuti" current-date))
+     (check-equal? (date-hour calculated-time) 21)
+     (check-equal? (date-minute calculated-time) 49)
      )
     )))
 
 (for-each run-tests all)
- ; (run-tests (car all))
+  ; (run-tests (car all))

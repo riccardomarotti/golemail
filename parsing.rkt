@@ -10,7 +10,7 @@
   "(?i:luned[iì]|marted[iì]|mercoled[iì]|gioved[iì]|venerd[iì]|sabato|domenica|oggi|domani|dopodomani)")
 
 (define hour-regexp "(?:([0-2]?[0-9]):)?([0-5]?[0-9])(?!.*minut[io])")
-(define minute-regexp "[0-2]?[0-9]:([0-5]?[0-9])")
+(define minute-regexp "[0-2]?[0-9]:([0-5]?[0-9])|([0-5]?[0-9])(?: *minut[io])")
 (define month-regexp "(?i:gennaio|febbraio|marzo|aprile|maggio|giugno|luglio|agosto|settembre|ottobre|novembre|dicembre)")
 
 (define timing-regexps
@@ -33,7 +33,7 @@
   (if (extract-timing reminder)
       (struct-copy date current-date
                    [hour (extract-hour reminder current-date)]
-                   [minute (extract-minute reminder)]
+                   [minute (extract-minute reminder current-date)]
                    [second (extract-second reminder)]
                    [week-day (extract-week-day reminder current-date)]
                    [day (extract-day reminder current-date)])
@@ -42,13 +42,18 @@
 (define (extract-hour reminder current-date)
   (define matches (regexp-match hour-regexp reminder))
   (if matches
-    (string->number (first (filter (lambda(x) (not (equal? #f x))) (rest matches))))
+    (string->number (first (filter (λ(x) (not (equal? #f x))) (rest matches))))
     (date-hour current-date)))
 
 
-(define (extract-minute reminder)
+(define (extract-minute reminder current-date)
   (define matches (regexp-match minute-regexp reminder))
-  (if matches (string->number (last matches)) 0))
+  (define operation
+    (cond
+     [(regexp-match ".*tra.*" reminder) +]
+     [else (λ(x y) y)]))
+
+  (if matches (operation (date-minute current-date) (string->number (last (filter (λ(x) (not (equal? x #f)))matches)))) 0))
 
 (define (extract-second reminder)
   0)
