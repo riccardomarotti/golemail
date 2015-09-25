@@ -42,7 +42,7 @@
 (define (extract-hour reminder current-date)
   (define matches (regexp-match hour-regexp reminder))
   (if matches
-    (string->number (first (filter (λ(x) (not (equal? #f x))) (rest matches))))
+    (string->number (first (remove* '(#f) (rest matches))))
     (date-hour current-date)))
 
 
@@ -53,7 +53,7 @@
      [(regexp-match ".*tra.*" reminder) +]
      [else (λ(x y) y)]))
 
-  (if matches (operation (date-minute current-date) (string->number (last (filter (λ(x) (not (equal? x #f)))matches)))) 0))
+  (if matches (operation (date-minute current-date) (string->number (last (remove* '(#f) matches)))) 0))
 
 (define (extract-second reminder)
   0)
