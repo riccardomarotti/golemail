@@ -40,7 +40,14 @@
     #f ))
 
 (define (extract-hour reminder)
-  (string->number (first (string-split (last (string-split reminder)) ":"))))
+  (define matches (regexp-match hour-regexp reminder))
+  (and matches (string->number (first-not-false (rest matches)))))
+
+(define (first-not-false elements)
+  (cond
+    [(empty? elements) #f]
+    [(equal? #f (first elements)) (first-not-false (rest elements))]
+    [else (first elements)]))
 
 (define (extract-minute reminder)
   (get-minutes (rest (string-split reminder ":"))))

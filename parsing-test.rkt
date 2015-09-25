@@ -94,3 +94,4 @@
     )))
 
 (for-each run-tests all)
+; (run-tests (car all))
