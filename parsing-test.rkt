@@ -10,9 +10,10 @@
   (list
    (test-suite
     "time extraction"
-    (check-false (extract-hour "any string"))
+    (check-equal? (extract-hour "any string") 0)
     (check-equal? (extract-hour "10:30") 10)
     (check-equal? (extract-hour "23") 23)
+    (check-equal? (extract-hour "32  minuti") 0)
 
     (check-equal? (extract-minute "any non timing string") 0)
     (check-equal? (extract-minute "10:30") 30)
@@ -94,4 +95,4 @@
     )))
 
 (for-each run-tests all)
-; (run-tests (car all))
+ ; (run-tests (car all))

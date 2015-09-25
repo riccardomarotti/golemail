@@ -9,7 +9,7 @@
 (define week-day-regexp
   "(?i:luned[iì]|marted[iì]|mercoled[iì]|gioved[iì]|venerd[iì]|sabato|domenica|oggi|domani|dopodomani)")
 
-(define hour-regexp "(?:([0-2]?[0-9]):)?([0-5]?[0-9])")
+(define hour-regexp "(?:([0-2]?[0-9]):)?([0-5]?[0-9])(?!.*minut[io])")
 (define minute-regexp "[0-2]?[0-9]:([0-5]?[0-9])")
 (define month-regexp "(?i:gennaio|febbraio|marzo|aprile|maggio|giugno|luglio|agosto|settembre|ottobre|novembre|dicembre)")
 
@@ -41,8 +41,9 @@
 
 (define (extract-hour reminder)
   (define matches (regexp-match hour-regexp reminder))
-  (and matches
-    (string->number (first (filter (lambda(x) (not (equal? #f x))) (rest matches))))))
+  (if matches
+    (string->number (first (filter (lambda(x) (not (equal? #f x))) (rest matches))))
+    0))
 
 
 (define (extract-minute reminder)
