@@ -70,9 +70,6 @@
    [(equal? day "domani") (add1 (date-day current-date))]
    [else (date-day current-date)]))
 
-(define (first-timing-word reminder)
-  (second (regexp-match timing-regexp reminder)))
-
 
 
 

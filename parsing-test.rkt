@@ -4,8 +4,22 @@
          rackunit/text-ui
          "parsing.rkt")
 
+(require/expose "parsing.rkt" (extract-hour extract-minute extract-second))
+
 (define all
-(list
+  (list
+   (test-suite
+    "time extraction"
+    (check-false (extract-hour "any string"))
+    (check-equal? (extract-hour "10:30") 10)
+    (check-equal? (extract-hour "23") 23)
+
+    (check-equal? (extract-minute "any non timing string") 0)
+    (check-equal? (extract-minute "10:30") 30)
+    (check-equal? (extract-minute "9") 0)
+
+    (check-equal? (extract-second "any string") 0))
+
    (test-suite
     "subject parsing"
     (test-equal? "empty string" (get-reminder-string "") #f)
@@ -78,4 +92,5 @@
     ;  (check-equal? (date-hour calculated-time) 22)
     ;  )
     )))
+
 (for-each run-tests all)
