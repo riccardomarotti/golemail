@@ -36,6 +36,16 @@
      (define actual-result-date (seconds->date actual-result-seconds))
      (check-equal? (date-day actual-result-date) 26))
 
+    (test-case
+     "tra X giorni"
+     (define current 1443191395);"Friday, September 25th, 2015 4:29:55pm"
+
+     (define actual-result-seconds (execute "tra 1 giorno" current))
+     (check-equal? actual-result-seconds (+ current 86400))
+
+     (set! actual-result-seconds (execute "tra 10 giorni" current))
+     (check-equal? actual-result-seconds (+ current 864000)))
+
 
 
     (test-case

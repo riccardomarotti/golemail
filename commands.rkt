@@ -22,7 +22,8 @@
   (define multiplier
     (cond
      [(regexp-match "^min.*" type) 60]
-     [else 3600]))
+     [(regexp-match "^or.*" type) 3600]
+     [else 86400]))
 
   (+ current-second (* multiplier (string->number value))))
 
