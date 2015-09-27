@@ -54,6 +54,18 @@
 (define (merco when value current-second)
 	(on-day 3 value current-second))
 
+(define (giove when value current-second)
+	(on-day 4 value current-second))
+
+(define (vener when value current-second)
+	(on-day 5 value current-second))
+
+(define (sabat when value current-second)
+	(on-day 6 value current-second))
+
+(define (domen when value current-second)
+	(on-day 0 value current-second))
+
 (define (in-days number-of-days value current-second)
 	(+ (* 86400 number-of-days) (date->seconds (struct-copy date (seconds->date current-second) [hour (string->number value)]))))
 

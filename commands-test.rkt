@@ -143,7 +143,27 @@
      (set! actual-result-seconds (execute "mercoledi alle 10:30" current))
      (set! actual-result-date (seconds->date actual-result-seconds))
      (check-equal? (date-week-day actual-result-date) 3)
-     (check-equal? (date-day actual-result-date) 7))
+     (check-equal? (date-day actual-result-date) 7)
+
+     (set! actual-result-seconds (execute "giovedi alle 10:30" current))
+     (set! actual-result-date (seconds->date actual-result-seconds))
+     (check-equal? (date-week-day actual-result-date) 4)
+     (check-equal? (date-day actual-result-date) 1)
+
+     (set! actual-result-seconds (execute "venerdi alle 10:30" current))
+     (set! actual-result-date (seconds->date actual-result-seconds))
+     (check-equal? (date-week-day actual-result-date) 5)
+     (check-equal? (date-day actual-result-date) 2)
+
+     (set! actual-result-seconds (execute "sabato alle 10:30" current))
+     (set! actual-result-date (seconds->date actual-result-seconds))
+     (check-equal? (date-week-day actual-result-date) 6)
+     (check-equal? (date-day actual-result-date) 3)
+
+     (set! actual-result-seconds (execute "domenica alle 10:30" current))
+     (set! actual-result-date (seconds->date actual-result-seconds))
+     (check-equal? (date-week-day actual-result-date) 0)
+     (check-equal? (date-day actual-result-date) 4))
     )))
 
   (for-each run-tests all)
