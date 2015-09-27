@@ -69,11 +69,14 @@
                               [hour h]
                               [minute m])))
 
+(define (in-days number-of-days value current-second)
+	(+ (* 86400 number-of-days) (date->seconds (struct-copy date (seconds->date current-second) [hour (string->number value)]))))
+
 (define (doman when value current-second)
-  (+ 86400 (date->seconds (struct-copy date (seconds->date current-second) [hour (string->number value)]))))
+  (in-days 1 value current-second))
 
 (define (dopod when value current-second)
-  (+ 172800 (date->seconds (struct-copy date (seconds->date current-second) [hour (string->number value)]))))
+  (in-days 2 value current-second))
 
 (define (il day month when hour current-second)
   (define result-seconds (date->seconds (struct-copy date (seconds->date current-second)
