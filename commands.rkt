@@ -89,7 +89,12 @@
                                                      [day (string->number day)]
                                                      [month (hash-ref months month)]
                                                      [second 0])))
-  (if (> result-seconds current-second) result-seconds (+ 31556926 result-seconds)))
+  (if (> result-seconds current-second)
+      result-seconds
+    (let ([result-date (seconds->date result-seconds)])
+      (date->seconds (struct-copy date result-date [year (+ 1 (date-year result-date))])))
+    ))
+
 
 
 

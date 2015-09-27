@@ -116,6 +116,10 @@
      (set! actual-result-date (seconds->date actual-result-seconds))
 
      (check-equal? (date-month actual-result-date) 7)
+     (check-equal? (date-day actual-result-date) 10)
+     (check-equal? (date-hour actual-result-date) 7)
+     (check-equal? (date-minute actual-result-date) 0)
+     (check-equal? (date-second actual-result-date) 0)
      (check-equal? (date-year actual-result-date) 2016))
 
     (test-case
@@ -180,6 +184,8 @@
      (set! actual-result-date (seconds->date actual-result-seconds))
      (check-equal? (date-week-day actual-result-date) 0)
      (check-equal? (date-day actual-result-date) 4))
+
+
     )))
 
   (for-each run-tests all)
