@@ -67,13 +67,15 @@
      (check-equal? (date-hour actual-result-date) 23))
 
     (test-case
-     "domani alle 10"
+     "domani alle 10:19"
      (define current 1443599327);"Wednesday, September 30th, 2015 9:48:47am"
 
-     (define actual-result-seconds (execute "domani alle 10" current))
+     (define actual-result-seconds (execute "domani alle 10:19" current))
      (define actual-result-date (seconds->date actual-result-seconds))
 
      (check-equal? (date-hour actual-result-date) 10)
+     (check-equal? (date-minute actual-result-date) 19)
+     (check-equal? (date-second actual-result-date) 0)
      (check-equal? (date-day actual-result-date) 1)
      (check-equal? (date-month actual-result-date) 10)
      (check-equal? (date-year actual-result-date) 2015)
@@ -97,13 +99,15 @@
      (check-equal? (date-year actual-result-date) 2015))
 
     (test-case
-     "il 10 ottobre alle 11"
+     "il 10 ottobre alle 11:27"
      (define current 1443599327);"Wednesday, September 30th, 2015 9:48:47am"
 
-     (define actual-result-seconds (execute "il 10 ottobre alle 11" current))
+     (define actual-result-seconds (execute "il 10 ottobre alle 11:27" current))
      (define actual-result-date (seconds->date actual-result-seconds))
 
      (check-equal? (date-hour actual-result-date) 11)
+     (check-equal? (date-minute actual-result-date) 27)
+     (check-equal? (date-second actual-result-date) 0)
      (check-equal? (date-day actual-result-date) 10)
      (check-equal? (date-month actual-result-date) 10)
      (check-equal? (date-year actual-result-date) 2015)
@@ -125,7 +129,8 @@
      (check-equal? (date-day actual-result-date) 27)
      (check-equal? (date-month actual-result-date) 9)
      (check-equal? (date-year actual-result-date) 2015)
-     (check-equal? (date-minute actual-result-date) 30))
+     (check-equal? (date-minute actual-result-date) 30)
+     (check-equal? (date-second actual-result-date) 0))
 
     (test-case
      "lunedì alle 10:30"
@@ -139,7 +144,8 @@
      (check-equal? (date-day actual-result-date) 5)
      (check-equal? (date-month actual-result-date) 10)
      (check-equal? (date-year actual-result-date) 2015)
-     (check-equal? (date-minute actual-result-date) 30))
+     (check-equal? (date-minute actual-result-date) 30)
+     (check-equal? (date-second actual-result-date) 0))
 
     (test-case
      "other days"

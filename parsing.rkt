@@ -8,30 +8,25 @@
 
 (define timing-regexps
   (list
-   "tra +([0-9]+) +minut[io] *$"
-   "tra +([0-9]+) +or[ae] *$"
-   "tra +([0-9]+) +giorn[io] *$"
-   (~a week-day-regexp " +alle +" hour-regexp)
-   (~a "alle +" hour-regexp)
-   (~a "il +([0-9]+) +" month-regexp)
-   week-day-regexp))
+   "tra +([0-9]+) +minut[io] *\\.>>>$"
+   "tra +([0-9]+) +or[ae] *\\.>>>$"
+   "tra +([0-9]+) +giorn[io] *\\.>>>$"
+   (~a week-day-regexp " +alle +" hour-regexp "\\.>>>$")
+   (~a "alle +" hour-regexp "\\.>>>$")
+   (~a "il +([0-9]+) +" month-regexp " +alle +" hour-regexp "\\.>>>$")
+   (~a "il +([0-9]+) +" month-regexp "\\.>>>$")
+   (~a week-day-regexp "\\.>>>$")))
 
 (define timing-regexp (string-join timing-regexps "|"))
 
-
-
-(define (get-reminder-string string_to_parse)
-  (define result (regexp-match "(.*)\\.>>>$" string_to_parse))
-  (and result (second result)))
-
 (define (extract-timing string)
   (define result (regexp-match timing-regexp string))
-  (and result (string-downcase (first result))))
+  (and result (string-downcase (string-replace (first result) ".>>>" ""))))
 
 (define (extract-message string)
   (define timing-match (regexp-match timing-regexp string))
   (if (not timing-match)
-      string
+      (string-replace string ".>>>" "")
     (string-trim (substring string 0 (- (string-length string) (string-length (first timing-match)))))))
 
-(provide get-reminder-string extract-timing extract-message)
+(provide extract-timing extract-message)

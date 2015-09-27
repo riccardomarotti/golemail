@@ -32,7 +32,8 @@
   (define m (string->number (second (parse-time value))))
   (date->seconds (struct-copy date (seconds->date current-second)
                               [hour h]
-                              [minute m])))
+                              [minute m]
+                              [second 0])))
 
 (define (on-day day-number value current-second)
   (define current-date (seconds->date current-second))
@@ -44,7 +45,8 @@
   (define new-date (seconds->date (+ correction current-second)))
   (date->seconds (struct-copy date new-date
                               [hour h]
-                              [minute m])))
+                              [minute m]
+                              [second 0])))
 
 (define (luned when value current-second)
   (on-day 1 value current-second))
@@ -68,7 +70,9 @@
   (on-day 0 value current-second))
 
 (define (in-days number-of-days value current-second)
-  (+ (* 86400 number-of-days) (date->seconds (struct-copy date (seconds->date current-second) [hour (string->number value)]))))
+  (define h (string->number (first (parse-time value))))
+  (define m (string->number (second (parse-time value))))
+  (+ (* 86400 number-of-days) (date->seconds (struct-copy date (seconds->date current-second) [second 0] [minute m] [hour h]))))
 
 (define (doman when value current-second)
   (in-days 1 value current-second))
@@ -77,10 +81,14 @@
   (in-days 2 value current-second))
 
 (define (il day month when hour current-second)
+  (define h (string->number (first (parse-time hour))))
+  (define m (string->number (second (parse-time hour))))
   (define result-seconds (date->seconds (struct-copy date (seconds->date current-second)
-                                                     [hour (string->number hour)]
+                                                     [hour h]
+                                                     [minute m]
                                                      [day (string->number day)]
-                                                     [month (hash-ref months month)])))
+                                                     [month (hash-ref months month)]
+                                                     [second 0])))
   (if (> result-seconds current-second) result-seconds (+ 31556926 result-seconds)))
 
 
