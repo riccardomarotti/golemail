@@ -137,9 +137,13 @@
 
      (define actual-result-seconds (execute "martedi alle 10:30" current))
      (define actual-result-date (seconds->date actual-result-seconds))
-
      (check-equal? (date-week-day actual-result-date) 2)
-     (check-equal? (date-day actual-result-date) 6))
+     (check-equal? (date-day actual-result-date) 6)
+
+     (set! actual-result-seconds (execute "mercoledi alle 10:30" current))
+     (set! actual-result-date (seconds->date actual-result-seconds))
+     (check-equal? (date-week-day actual-result-date) 3)
+     (check-equal? (date-day actual-result-date) 7))
     )))
 
   (for-each run-tests all)
