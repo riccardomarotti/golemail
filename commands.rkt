@@ -26,10 +26,18 @@
 
   (+ current-second (* multiplier (string->number value))))
 
+(define (parse-time time-string)
+	(define tokens (string-split time-string ":"))
+	(define minutes (cdr tokens))
+	(and (empty? minutes) (set! minutes (list "0")))
+	(cons (car tokens) minutes))
+
 (define (oggi when value current-second)
+	(define h (string->number (first (parse-time value))))
+	(define m (string->number (second (parse-time value))))
   (date->seconds (struct-copy date (seconds->date current-second)
-                              [hour (string->number value)]
-                              [minute 0])))
+                              [hour h]
+                              [minute m])))
 
 (define (domani when value current-second)
   (+ 86400 (date->seconds (struct-copy date (seconds->date current-second) [hour (string->number value)]))))
