@@ -95,6 +95,11 @@
       (date->seconds (struct-copy date result-date [year (+ 1 (date-year result-date))])))
     ))
 
+(define (parse-time time-string)
+  (define tokens (string-split time-string ":"))
+  (define minutes (cdr tokens))
+  (and (empty? minutes) (set! minutes (list "0")))
+  (cons (car tokens) minutes))
 
 
 
@@ -105,11 +110,5 @@
   (set! command-list (cons (string->symbol function) (rest command-list)))
   (set! command-list (append command-list (list current-second)))
   (eval command-list ns))
-
-(define (parse-time time-string)
-  (define tokens (string-split time-string ":"))
-  (define minutes (cdr tokens))
-  (and (empty? minutes) (set! minutes (list "0")))
-  (cons (car tokens) minutes))
 
 (provide execute)
