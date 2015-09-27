@@ -49,6 +49,7 @@
      (check-equal? (date-day actual-result-date) 27)
      (check-equal? (date-month actual-result-date) 9)
      (check-equal? (date-year actual-result-date) 2015)
+     (check-equal? (date-minute actual-result-date) 0)
 
 
      (set! actual-result-seconds (execute "oggi alle 23" current))
@@ -84,6 +85,26 @@
      (check-equal? (date-day actual-result-date) 2)
      (check-equal? (date-month actual-result-date) 10)
      (check-equal? (date-year actual-result-date) 2015))
+
+    (test-case
+     "il 10 ottobre alle 11"
+     (define current 1443599327);"Wednesday, September 30th, 2015 9:48:47am"
+
+     (define actual-result-seconds (execute "il 10 ottobre alle 11" current))
+     (define actual-result-date (seconds->date actual-result-seconds))
+
+     (check-equal? (date-hour actual-result-date) 11)
+     (check-equal? (date-day actual-result-date) 10)
+     (check-equal? (date-month actual-result-date) 10)
+     (check-equal? (date-year actual-result-date) 2015)
+
+     (set! actual-result-seconds (execute "il 10 luglio alle 7" current))
+     (set! actual-result-date (seconds->date actual-result-seconds))
+
+     (check-equal? (date-month actual-result-date) 7)
+     (check-equal? (date-year actual-result-date) 2016))
+
+
 
 
     )))
