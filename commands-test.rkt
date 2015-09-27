@@ -14,20 +14,20 @@
      "tra X minuti"
      (define current 1443191395);"Friday, September 25th, 2015 4:29:55pm"
 
-     (define actual-result-seconds (execute "tra 10 minuti" current))
+     (define actual-result-seconds (execute "tra 10 Minuti" current))
      (check-equal? actual-result-seconds (+ current 600))
 
-     (set! actual-result-seconds (execute "tra 45 minuti" current))
+     (set! actual-result-seconds (execute "tra 45 minUti" current))
      (check-equal? actual-result-seconds (+ current 2700))
 
-     (set! actual-result-seconds (execute "tra 1 minuto" current))
+     (set! actual-result-seconds (execute "trA 1 minuto" current))
      (check-equal? actual-result-seconds (+ current 60)))
 
     (test-case
      "tra X ore"
      (define current 1443191395);"Friday, September 25th, 2015 4:29:55pm"
 
-     (define actual-result-seconds (execute "tra 1 ora" current))
+     (define actual-result-seconds (execute "tRa 1 oRa" current))
      (check-equal? actual-result-seconds (+ current 3600))
 
      (set! actual-result-seconds (execute "tra 10 ore" current))
@@ -40,7 +40,7 @@
      "tra X giorni"
      (define current 1443191395);"Friday, September 25th, 2015 4:29:55pm"
 
-     (define actual-result-seconds (execute "tra 1 giorno" current))
+     (define actual-result-seconds (execute "tra 1 gioRno" current))
      (check-equal? actual-result-seconds (+ current 86400))
 
      (set! actual-result-seconds (execute "tra 10 giorni" current))
@@ -52,7 +52,7 @@
      "oggi alle 10"
      (define current 1443340127);"Sunday, September 27th, 2015 9:48:47am"
 
-     (define actual-result-seconds (execute "oggi alle 10" current))
+     (define actual-result-seconds (execute "oggI alle 10" current))
      (define actual-result-date (seconds->date actual-result-seconds))
 
      (check-equal? (date-hour actual-result-date) 10)
@@ -70,7 +70,7 @@
      "domani alle 10:19"
      (define current 1443599327);"Wednesday, September 30th, 2015 9:48:47am"
 
-     (define actual-result-seconds (execute "domani alle 10:19" current))
+     (define actual-result-seconds (execute "doMani alle 10:19" current))
      (define actual-result-date (seconds->date actual-result-seconds))
 
      (check-equal? (date-hour actual-result-date) 10)
@@ -90,7 +90,7 @@
      "dopodomani alle 10"
      (define current 1443599327);"Wednesday, September 30th, 2015 9:48:47am"
 
-     (define actual-result-seconds (execute "dopodomani alle 10" current))
+     (define actual-result-seconds (execute "doPodomani alle 10" current))
      (define actual-result-date (seconds->date actual-result-seconds))
 
      (check-equal? (date-hour actual-result-date) 10)
@@ -102,7 +102,7 @@
      "il 10 ottobre alle 11:27"
      (define current 1443599327);"Wednesday, September 30th, 2015 9:48:47am"
 
-     (define actual-result-seconds (execute "il 10 ottobre alle 11:27" current))
+     (define actual-result-seconds (execute "Il 10 ottobre alle 11:27" current))
      (define actual-result-date (seconds->date actual-result-seconds))
 
      (check-equal? (date-hour actual-result-date) 11)
@@ -122,7 +122,7 @@
      "oggi alle 10:30"
      (define current 1443340127);"Sunday, September 27th, 2015 9:48:47am"
 
-     (define actual-result-seconds (execute "oggi alle 10:30" current))
+     (define actual-result-seconds (execute "ogGi alle 10:30" current))
      (define actual-result-date (seconds->date actual-result-seconds))
 
      (check-equal? (date-hour actual-result-date) 10)
@@ -136,7 +136,7 @@
      "lunedì alle 10:30"
      (define current 1443599327);"Wednesday, September 30th, 2015 9:48:47am"
 
-     (define actual-result-seconds (execute "lunedi alle 10:30" current))
+     (define actual-result-seconds (execute "Lunedi alle 10:30" current))
      (define actual-result-date (seconds->date actual-result-seconds))
 
      (check-equal? (date-week-day actual-result-date) 1)
@@ -151,32 +151,32 @@
      "other days"
      (define current 1443599327);"Wednesday, September 30th, 2015 9:48:47am"
 
-     (define actual-result-seconds (execute "martedi alle 10:30" current))
+     (define actual-result-seconds (execute "martEdi alle 10:30" current))
      (define actual-result-date (seconds->date actual-result-seconds))
      (check-equal? (date-week-day actual-result-date) 2)
      (check-equal? (date-day actual-result-date) 6)
 
-     (set! actual-result-seconds (execute "mercoledi alle 10:30" current))
+     (set! actual-result-seconds (execute "merColedi alle 10:30" current))
      (set! actual-result-date (seconds->date actual-result-seconds))
      (check-equal? (date-week-day actual-result-date) 3)
      (check-equal? (date-day actual-result-date) 7)
 
-     (set! actual-result-seconds (execute "giovedi alle 10:30" current))
+     (set! actual-result-seconds (execute "gioveDi alle 10:30" current))
      (set! actual-result-date (seconds->date actual-result-seconds))
      (check-equal? (date-week-day actual-result-date) 4)
      (check-equal? (date-day actual-result-date) 1)
 
-     (set! actual-result-seconds (execute "venerdi alle 10:30" current))
+     (set! actual-result-seconds (execute "veNerdì alle 10:30" current))
      (set! actual-result-date (seconds->date actual-result-seconds))
      (check-equal? (date-week-day actual-result-date) 5)
      (check-equal? (date-day actual-result-date) 2)
 
-     (set! actual-result-seconds (execute "sabato alle 10:30" current))
+     (set! actual-result-seconds (execute "sAbato alle 10:30" current))
      (set! actual-result-date (seconds->date actual-result-seconds))
      (check-equal? (date-week-day actual-result-date) 6)
      (check-equal? (date-day actual-result-date) 3)
 
-     (set! actual-result-seconds (execute "domenica alle 10:30" current))
+     (set! actual-result-seconds (execute "doMenica alle 10:30" current))
      (set! actual-result-date (seconds->date actual-result-seconds))
      (check-equal? (date-week-day actual-result-date) 0)
      (check-equal? (date-day actual-result-date) 4))

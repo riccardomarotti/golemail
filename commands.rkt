@@ -94,6 +94,7 @@
 
 
 (define (execute command current-second)
+  (set! command (string-downcase command))
   (define command-list (string-split command))
   (define function (substring (first command-list) 0 (min (string-length (first command-list)) 5)))
   (set! command-list (cons (string->symbol function) (rest command-list)))
