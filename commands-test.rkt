@@ -21,8 +21,7 @@
      (check-equal? actual-result-seconds (+ current 2700))
 
      (set! actual-result-seconds (execute "tra 1 minuto" current))
-     (check-equal? actual-result-seconds (+ current 60))
-     )
+     (check-equal? actual-result-seconds (+ current 60)))
 
     (test-case
      "tra X ore"
@@ -34,6 +33,47 @@
      (set! actual-result-seconds (execute "tra 10 ore" current))
      (check-equal? actual-result-seconds (+ current 36000))
 
-     ))))
+     (define actual-result-date (seconds->date actual-result-seconds))
+     (check-equal? (date-day actual-result-date) 26))
 
-(for-each run-tests all)
+
+
+    (test-case
+     "oggi alle 10"
+     (define current 1443340127);"Sunday, September 27th, 2015 9:48:47am"
+
+     (define actual-result-seconds (execute "oggi alle 10" current))
+     (define actual-result-date (seconds->date actual-result-seconds))
+
+     (check-equal? (date-hour actual-result-date) 10)
+     (check-equal? (date-day actual-result-date) 27)
+     (check-equal? (date-month actual-result-date) 9)
+     (check-equal? (date-year actual-result-date) 2015)
+
+
+     (set! actual-result-seconds (execute "oggi alle 23" current))
+     (set! actual-result-date (seconds->date actual-result-seconds))
+     (check-equal? (date-hour actual-result-date) 23))
+
+    (test-case
+     "domani alle 10"
+     (define current 1443340127);"Sunday, September 27th, 2015 9:48:47am"
+
+     (define actual-result-seconds (execute "domani alle 10" current))
+     (define actual-result-date (seconds->date actual-result-seconds))
+
+     (check-equal? (date-hour actual-result-date) 10)
+     (check-equal? (date-day actual-result-date) 28)
+     (check-equal? (date-month actual-result-date) 9)
+     (check-equal? (date-year actual-result-date) 2015)
+
+
+     (set! actual-result-seconds (execute "domani alle 23" current))
+     (set! actual-result-date (seconds->date actual-result-seconds))
+     (check-equal? (date-hour actual-result-date) 23)
+     (check-equal? (date-day actual-result-date) 28))
+
+
+    )))
+
+  (for-each run-tests all)

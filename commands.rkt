@@ -13,6 +13,12 @@
 
   (+ current-second (* multiplier (string->number value))))
 
+(define (oggi when value current-second)
+	(date->seconds (struct-copy date (seconds->date current-second) [hour (string->number value)])))
+
+(define (domani when value current-second)
+	(+ 86400 (date->seconds (struct-copy date (seconds->date current-second) [hour (string->number value)]))))
+
 (define (execute command current-second)
   (define command-list (string-split command))
   (set! command-list (cons (string->symbol (first command-list)) (rest command-list)))
