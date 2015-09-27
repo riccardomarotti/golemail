@@ -31,7 +31,13 @@
     (check-equal? (extract-timing "any text oggi") "oggi")
     (check-equal? (extract-timing "any text domaNi") "domani")
     (check-equal? (extract-timing "any text sabato alle 17") "sabato alle 17"))
+
+   (test-suite
+    "finding messages"
+    (check-equal? (extract-message "") "")
+    (check-equal? (extract-message "any text") "any text")
+    (check-equal? (extract-message "any text tra 1 ora") "any text")
+    )
    ))
 
 (for-each run-tests all)
-  ; (run-tests (car all))

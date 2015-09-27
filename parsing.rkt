@@ -28,5 +28,10 @@
   (define result (regexp-match timing-regexp string))
   (and result (string-downcase (first result))))
 
+(define (extract-message string)
+  (define timing-match (regexp-match timing-regexp string))
+  (if (not timing-match)
+      string
+      (string-trim (substring string 0 (- (string-length string) (string-length (first timing-match)))))))
 
-(provide get-reminder-string extract-timing)
+(provide get-reminder-string extract-timing extract-message)
