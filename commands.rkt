@@ -19,6 +19,9 @@
 (define (domani when value current-second)
 	(+ 86400 (date->seconds (struct-copy date (seconds->date current-second) [hour (string->number value)]))))
 
+(define (dopodomani when value current-second)
+	(+ 172800 (date->seconds (struct-copy date (seconds->date current-second) [hour (string->number value)]))))
+
 (define (execute command current-second)
   (define command-list (string-split command))
   (set! command-list (cons (string->symbol (first command-list)) (rest command-list)))

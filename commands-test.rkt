@@ -57,21 +57,33 @@
 
     (test-case
      "domani alle 10"
-     (define current 1443340127);"Sunday, September 27th, 2015 9:48:47am"
+     (define current 1443599327);"Wednesday, September 30th, 2015 9:48:47am"
 
      (define actual-result-seconds (execute "domani alle 10" current))
      (define actual-result-date (seconds->date actual-result-seconds))
 
      (check-equal? (date-hour actual-result-date) 10)
-     (check-equal? (date-day actual-result-date) 28)
-     (check-equal? (date-month actual-result-date) 9)
+     (check-equal? (date-day actual-result-date) 1)
+     (check-equal? (date-month actual-result-date) 10)
      (check-equal? (date-year actual-result-date) 2015)
 
 
      (set! actual-result-seconds (execute "domani alle 23" current))
      (set! actual-result-date (seconds->date actual-result-seconds))
      (check-equal? (date-hour actual-result-date) 23)
-     (check-equal? (date-day actual-result-date) 28))
+     (check-equal? (date-day actual-result-date) 1))
+
+    (test-case
+     "dopodomani alle 10"
+     (define current 1443599327);"Wednesday, September 30th, 2015 9:48:47am"
+
+     (define actual-result-seconds (execute "dopodomani alle 10" current))
+     (define actual-result-date (seconds->date actual-result-seconds))
+
+     (check-equal? (date-hour actual-result-date) 10)
+     (check-equal? (date-day actual-result-date) 2)
+     (check-equal? (date-month actual-result-date) 10)
+     (check-equal? (date-year actual-result-date) 2015))
 
 
     )))
