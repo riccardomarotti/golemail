@@ -130,6 +130,16 @@
      (check-equal? (date-month actual-result-date) 10)
      (check-equal? (date-year actual-result-date) 2015)
      (check-equal? (date-minute actual-result-date) 30))
+
+    (test-case
+     "other days"
+     (define current 1443599327);"Wednesday, September 30th, 2015 9:48:47am"
+
+     (define actual-result-seconds (execute "martedi alle 10:30" current))
+     (define actual-result-date (seconds->date actual-result-seconds))
+
+     (check-equal? (date-week-day actual-result-date) 2)
+     (check-equal? (date-day actual-result-date) 6))
     )))
 
   (for-each run-tests all)

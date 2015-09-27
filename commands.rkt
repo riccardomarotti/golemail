@@ -45,6 +45,18 @@
                               [hour h]
                               [minute m])))
 
+(define (marte when value current-second)
+	(define current-date (seconds->date current-second))
+	(define current-week-day (date-week-day current-date))
+	(define h (string->number (first (parse-time value))))
+	(define m (string->number (second (parse-time value))))
+	(define monday-number (if (> current-week-day 2) 9 2))
+	(define correction (* 86400 (- monday-number current-week-day)))
+	(define new-date (seconds->date (+ correction current-second)))
+  (date->seconds (struct-copy date new-date
+                              [hour h]
+                              [minute m])))
+
 (define (doman when value current-second)
   (+ 86400 (date->seconds (struct-copy date (seconds->date current-second) [hour (string->number value)]))))
 
