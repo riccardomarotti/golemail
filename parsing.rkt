@@ -32,6 +32,6 @@
   (define timing-match (regexp-match timing-regexp string))
   (if (not timing-match)
       string
-      (string-trim (substring string 0 (- (string-length string) (string-length (first timing-match)))))))
+    (string-trim (substring string 0 (- (string-length string) (string-length (first timing-match)))))))
 
 (provide get-reminder-string extract-timing extract-message)

@@ -36,8 +36,7 @@
     "finding messages"
     (check-equal? (extract-message "") "")
     (check-equal? (extract-message "any text") "any text")
-    (check-equal? (extract-message "any text tra 1 ora") "any text")
-    )
+(check-equal? (extract-message "any text tra 1 ora") "any text"))
    ))
 
 (for-each run-tests all)
