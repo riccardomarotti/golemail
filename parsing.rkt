@@ -19,7 +19,7 @@
 
 (define timing-regexp (string-join timing-regexps "|"))
 
-(define (extract-timing string)
+(define (extract-schedule string)
   (define result (regexp-match timing-regexp string))
   (and result (string-downcase (string-replace (first result) ".>>>" ""))))
 
@@ -29,4 +29,4 @@
       (string-replace string ".>>>" "")
     (string-trim (substring string 0 (- (string-length string) (string-length (first timing-match)))))))
 
-(provide extract-timing extract-message)
+(provide extract-schedule extract-message)

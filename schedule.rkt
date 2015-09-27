@@ -103,12 +103,12 @@
 
 
 
-(define (execute command current-second)
-  (set! command (string-downcase command))
-  (define command-list (string-split command))
+(define (get-seconds-for schedule-string current-second)
+  (set! schedule-string (string-downcase schedule-string))
+  (define command-list (string-split schedule-string))
   (define function (substring (first command-list) 0 (min (string-length (first command-list)) 5)))
   (set! command-list (cons (string->symbol function) (rest command-list)))
   (set! command-list (append command-list (list current-second)))
   (eval command-list ns))
 
-(provide execute)
+(provide get-seconds-for)
