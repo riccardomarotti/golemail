@@ -26,12 +26,6 @@
 
   (+ current-second (* multiplier (string->number value))))
 
-(define (parse-time time-string)
-	(define tokens (string-split time-string ":"))
-	(define minutes (cdr tokens))
-	(and (empty? minutes) (set! minutes (list "0")))
-	(cons (car tokens) minutes))
-
 (define (oggi when value current-second)
 	(define h (string->number (first (parse-time value))))
 	(define m (string->number (second (parse-time value))))
@@ -39,10 +33,10 @@
                               [hour h]
                               [minute m])))
 
-(define (domani when value current-second)
+(define (doman when value current-second)
   (+ 86400 (date->seconds (struct-copy date (seconds->date current-second) [hour (string->number value)]))))
 
-(define (dopodomani when value current-second)
+(define (dopod when value current-second)
   (+ 172800 (date->seconds (struct-copy date (seconds->date current-second) [hour (string->number value)]))))
 
 (define (il day month when hour current-second)
@@ -54,8 +48,15 @@
 
 (define (execute command current-second)
   (define command-list (string-split command))
-  (set! command-list (cons (string->symbol (first command-list)) (rest command-list)))
+  (define function (substring (first command-list) 0 (min (string-length (first command-list)) 5)))
+  (set! command-list (cons (string->symbol function) (rest command-list)))
   (set! command-list (append command-list (list current-second)))
   (eval command-list ns))
+
+(define (parse-time time-string)
+	(define tokens (string-split time-string ":"))
+	(define minutes (cdr tokens))
+	(and (empty? minutes) (set! minutes (list "0")))
+	(cons (car tokens) minutes))
 
 (provide execute)
