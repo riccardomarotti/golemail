@@ -21,10 +21,10 @@
 (define (tra value type current-second)
   (define multiplier
     (cond
-     [(regexp-match "^min.*" type) 60]
-     [(regexp-match "^or.*" type) 3600]
-     [else 86400]))
-
+      [(regexp-match "^min.*" type) 60]
+      [(regexp-match "^or.*" type) 3600]
+      [else 86400]))
+  
   (+ current-second (* multiplier (string->number value))))
 
 (define (oggi when value current-second)
@@ -91,9 +91,9 @@
                                                      [second 0])))
   (if (> result-seconds current-second)
       result-seconds
-    (let ([result-date (seconds->date result-seconds)])
-      (date->seconds (struct-copy date result-date [year (+ 1 (date-year result-date))])))
-    ))
+      (let ([result-date (seconds->date result-seconds)])
+        (date->seconds (struct-copy date result-date [year (+ 1 (date-year result-date))])))
+      ))
 
 (define (parse-time time-string)
   (define tokens (string-split time-string ":"))

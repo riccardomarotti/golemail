@@ -27,6 +27,6 @@
   (define timing-match (regexp-match timing-regexp string))
   (if (not timing-match)
       (string-replace string ".>>>" "")
-    (string-trim (substring string 0 (- (string-length string) (string-length (first timing-match)))))))
+      (string-trim (substring string 0 (- (string-length string) (string-length (first timing-match)))))))
 
 (provide extract-schedule extract-message)
