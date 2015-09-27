@@ -19,6 +19,9 @@
 
      (set! actual-result-seconds (execute "tra 45 minuti" current))
      (check-equal? actual-result-seconds (+ current 2700))
+
+     (set! actual-result-seconds (execute "tra 1 minuto" current))
+     (check-equal? actual-result-seconds (+ current 60))
      )
 
     (test-case

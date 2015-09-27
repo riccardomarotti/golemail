@@ -8,7 +8,7 @@
 (define (tra value type current-second)
   (define multiplier
     (cond
-     [(equal? "minuti" type) 60]
+     [(regexp-match "^min.*" type) 60]
      [else 3600]))
 
   (+ current-second (* multiplier (string->number value))))
