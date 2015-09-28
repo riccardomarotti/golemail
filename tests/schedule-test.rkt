@@ -2,7 +2,7 @@
 
 (require rackunit
          rackunit/text-ui
-         "schedule.rkt")
+         "../schedule.rkt")
 
 (define all
   (list

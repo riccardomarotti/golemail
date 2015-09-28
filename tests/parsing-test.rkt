@@ -2,7 +2,7 @@
 
 (require rackunit
          rackunit/text-ui
-         "parsing.rkt")
+         "../parsing.rkt")
 
 (define all
   (list
@@ -27,7 +27,7 @@
     (check-equal? (extract-schedule "any text oggi.>>>") "oggi")
     (check-equal? (extract-schedule "any text domaNi.>>>") "domani")
     (check-equal? (extract-schedule "any text sabato alle 17.>>>") "sabato alle 17"))
-   
+
    (test-suite
     "finding messages"
     (check-equal? (extract-message ".>>>") "")
