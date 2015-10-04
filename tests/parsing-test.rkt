@@ -34,6 +34,18 @@
     (check-equal? (extract-message "") "")
     (check-equal? (extract-message "any text.>>>") "any text")
     (check-equal? (extract-message "any text tra 1 ora.>>>") "any text"))
-   ))
+
+
+   (test-suite
+    "parametrized golem-tag"
+    (golem-tag "~12345")
+    (check-equal? (extract-schedule "any text tra 1 ora~12345") "tra 1 ora")
+    (check-false (extract-schedule "any text tra 1 ora.>>>"))
+
+    (golem-tag "AnyTagYouWant")
+    (check-equal? (extract-schedule "any text tra 1 giornoAnyTagYouWant") "tra 1 giorno")
+    (check-false (extract-schedule "any text tra 1 giorno.>>>"))
+    )
+))
 
 (for-each run-tests all)
