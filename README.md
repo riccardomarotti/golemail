@@ -38,7 +38,7 @@ with similar behaviour.
 
 For security reason, there will probably be the needing of a sort of configurable tag to mark email subjects, such as
     
-remind me to buy some apples - today at 6pm>>>
+    remind me to buy some apples - today at 6pm>>>
 
 ###Progress
 
