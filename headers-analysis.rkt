@@ -5,6 +5,9 @@
          "parsing.rkt"
          "messages.rkt")
 
+(define (filter-reminders messages-list)
+  (filter (λ(message) (not (equal? #f (extract-schedule (bytes->string/utf-8(extract-field #"Subject"(message-header message) )))))) messages-list))
+
 (define (filter-headers-with-same-to-and-from messages-list)
   (filter has-same-to-and-from messages-list))
 
@@ -18,25 +21,9 @@
 
 
 (define (extract-address where header)
-  (first (extract-addresses (extract-field where header) 'address)))
-
-(define (get-reminders-headers-and-uid messages-list)
-  (filter (λ(list-of-list) (is-message-a-reminder? (first list-of-list))) messages-list))
-
-(define (is-message-a-reminder? header)
-  (extract-schedule (extract-subject header)))
-
-(define (get-reminders-schedule-and-uid remidners-headers-and-uid)
-  (map (λ(header-and-uid) (list (extract-schedule (extract-subject (first header-and-uid))) (second header-and-uid))) remidners-headers-and-uid))
-
-(define (get-reminders-times reminders-schedule-and-uid)
-  (map (λ(reminder-and-uid) (list (get-seconds-for (first reminder-and-uid) (current-seconds)) (second reminder-and-uid))) reminders-schedule-and-uid)
-  )
-
-(define (extract-subject header)
-  (bytes->string/utf-8
-   (extract-field #"Subject" header)))
+  (first (extract-addresses (extract-field where (bytes->string/utf-8 header)) 'address)))
 
 
 (provide filter-headers-with-same-to-and-from
-         filter-headers-with-from-address)
+         filter-headers-with-from-address
+         filter-reminders)
