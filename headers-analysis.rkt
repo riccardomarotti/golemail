@@ -4,10 +4,10 @@
          "schedule.rkt"
          "parsing.rkt")
 
-(define (filter-messages-with-same-to-and-from messages-list)
+(define (filter-headers-with-same-to-and-from messages-list)
   (filter has-same-to-and-from messages-list))
 
-(define (filter-messages-with-from-address address headers)
+(define (filter-headers-with-from-address address headers)
   (filter (λ(header) (equal? address (extract-address "From" header))) headers))
 
 (define (has-same-to-and-from message-header)
@@ -19,5 +19,5 @@
   (first (extract-addresses (extract-field where header) 'address)))
 
 
-(provide filter-messages-with-same-to-and-from
-         filter-messages-with-from-address)
+(provide filter-headers-with-same-to-and-from
+         filter-headers-with-from-address)
