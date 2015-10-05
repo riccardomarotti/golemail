@@ -2,17 +2,18 @@
 
 (require net/head
          "schedule.rkt"
-         "parsing.rkt")
+         "parsing.rkt"
+         "messages.rkt")
 
 (define (filter-headers-with-same-to-and-from messages-list)
   (filter has-same-to-and-from messages-list))
 
-(define (filter-headers-with-from-address address headers)
-  (filter (λ(header) (equal? address (extract-address "From" header))) headers))
+(define (filter-headers-with-from-address address messages)
+  (filter (λ(message) (equal? address (extract-address "From" (message-header message)))) messages))
 
-(define (has-same-to-and-from message-header)
-  (define to-address (extract-address "To" message-header))
-  (define from-address (extract-address "From" message-header))
+(define (has-same-to-and-from message)
+  (define to-address (extract-address "To" (message-header message)))
+  (define from-address (extract-address "From" (message-header message)))
   (equal? to-address from-address))
 
 
@@ -22,8 +23,8 @@
 (define (get-reminders-headers-and-uid messages-list)
   (filter (λ(list-of-list) (is-message-a-reminder? (first list-of-list))) messages-list))
 
-(define (is-message-a-reminder? message-header)
-  (extract-schedule (extract-subject message-header)))
+(define (is-message-a-reminder? header)
+  (extract-schedule (extract-subject header)))
 
 (define (get-reminders-schedule-and-uid remidners-headers-and-uid)
   (map (λ(header-and-uid) (list (extract-schedule (extract-subject (first header-and-uid))) (second header-and-uid))) remidners-headers-and-uid))

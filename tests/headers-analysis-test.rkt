@@ -3,7 +3,8 @@
 (require rackunit
          rackunit/text-ui
          net/head
-         "../headers-analysis.rkt")
+         "../headers-analysis.rkt"
+         "../messages.rkt")
 
 (define all
   (list
@@ -12,22 +13,43 @@
     (test-case
      "filter headers with same from and to address"
      (define same-sender-and-receiver-header (insert-field "To" "Sender <sender@email.it>" (insert-field "From" "Sender <sender@email.it>"  empty-header)))
-     (define anopther-header (insert-field "To" "Sender <sender@email.it>" (insert-field "From" "Another Sender <anothersender@email.it>"  empty-header)))
-     (define headers (list same-sender-and-receiver-header anopther-header))
-     (define filtered-headers (filter-headers-with-same-to-and-from headers))
+     (define same-sender-and-receiver-message (message same-sender-and-receiver-header "any id"))
 
-     (check-equal? (length filtered-headers) 1)
-     (check-equal? (car filtered-headers) same-sender-and-receiver-header))
+     (define another-header (insert-field "To" "Sender <sender@email.it>" (insert-field "From" "Another Sender <anothersender@email.it>"  empty-header)))
+     (define another-message (message another-header "anuy other id"))
+
+     (define messages (list same-sender-and-receiver-message another-message))
+     (define filtered-messages (filter-headers-with-same-to-and-from messages))
+
+     (check-equal? (length filtered-messages) 1)
+     (check-equal? (car filtered-messages) same-sender-and-receiver-message))
 
     (test-case
      "filter headers from a particular address"
      (define header-from-sender (insert-field "To" "Sender <sender@email.it>" (insert-field "From" "Sender <sender@email.it>"  empty-header)))
+     (define message-from-sender (message header-from-sender "any id"))
      (define header-from-another-sender (insert-field "To" "Sender <sender@email.it>" (insert-field "From" "Another Sender <anothersender@email.it>"  empty-header)))
-     (define headers (list header-from-sender header-from-another-sender))
-     (define filtered-headers (filter-headers-with-from-address "sender@email.it" headers))
+     (define message-from-another-sender (message header-from-another-sender "any other id"))
+     (define messages (list message-from-sender message-from-another-sender))
+     (define filtered-messages (filter-headers-with-from-address "sender@email.it" messages))
 
-     (check-equal? (length filtered-headers) 1)
-     (check-equal? (car filtered-headers) header-from-sender))))
+     (check-equal? (length filtered-messages) 1)
+     (check-equal? (car filtered-messages) message-from-sender))
+
+    (test-case
+     "filter headers from a particular address"
+     (define header-from-sender (insert-field "To" "Sender <sender@email.it>" (insert-field "From" "Sender <sender@email.it>"  empty-header)))
+     (define message-from-sender (message header-from-sender "any id"))
+     (define header-from-another-sender (insert-field "To" "Sender <sender@email.it>" (insert-field "From" "Another Sender <anothersender@email.it>"  empty-header)))
+     (define message-from-another-sender (message header-from-another-sender "any other id"))
+     (define messages (list message-from-sender message-from-another-sender))
+     (define filtered-messages (filter-headers-with-from-address "sender@email.it" messages))
+
+     (check-equal? (length filtered-messages) 1)
+     (check-equal? (car filtered-messages) message-from-sender))
+
+
+    ))
 
 
   )
