@@ -1,6 +1,6 @@
 #lang racket
 
-(struct message (header uid) #:transparent)
+(struct message (header uid original-position) #:transparent)
 
 
 (provide (struct-out message))

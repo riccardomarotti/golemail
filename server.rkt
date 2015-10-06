@@ -23,9 +23,12 @@
    #:tls? #t))
 
 (define (get-new-messages connection messages recent-messages-count)
-  (map (λ(message-and-uid) (message (first message-and-uid) (second message-and-uid))) (imap-get-messages connection
-                                                                                                          (map add1 (range messages))
-                                                                                                          '(header uid))))
+  (define messages-numbers (map add1 (range messages)))
+  (map (λ(message-and-uid message-number)
+    (message (first message-and-uid) (second message-and-uid) message-number))
+       (imap-get-messages connection
+                          messages-numbers
+                          '(header uid)) messages-numbers))
 
 
 (define (loop server username password)
