@@ -4,7 +4,7 @@
          rackunit/text-ui
          net/head
          "../headers-analysis.rkt"
-         "../messages.rkt")
+         "../structures.rkt")
 
 (define all
   (list

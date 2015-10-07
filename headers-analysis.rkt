@@ -3,7 +3,7 @@
 (require net/head
          "schedule.rkt"
          "parsing.rkt"
-         "messages.rkt")
+         "structures.rkt")
 
 (define (filter-reminders messages-list)
   (filter (λ(message) (not (equal? #f (extract-schedule (bytes->string/utf-8(extract-field #"Subject"(message-header message) )))))) messages-list))

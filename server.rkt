@@ -2,7 +2,7 @@
 
 (require json
          net/imap
-         "messages.rkt"
+         "structures.rkt"
          "headers-analysis.rkt")
 
 (define (start)
