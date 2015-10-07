@@ -23,12 +23,23 @@
    #:tls? #t))
 
 (define (get-new-messages connection messages recent-messages-count)
-  (define messages-numbers (map add1 (range messages)))
+  (define messages-positions (map add1 (range messages)))
   (map (λ(message-and-uid message-number)
     (message (first message-and-uid) "Inbox" (second message-and-uid) message-number))
        (imap-get-messages connection
-                          messages-numbers
-                          '(header uid)) messages-numbers))
+                          messages-positions
+                          '(header uid)) messages-positions))
+
+(define (mark-as status connection messages-positions)
+  (imap-store connection '+ messages-positions (list (symbol->imap-flag status))))
+
+(define (move-messages-to mailbox messages connection)
+  (define messages-positions (map (λ(message) (message-position message)) messages))
+  (imap-copy connection messages-positions mailbox)
+  (mark-as 'deleted connection messages-positions)
+  (imap-expunge connection))
+
+
 
 (define (loop server username password)
   (define-values (connection messages newmessages) (connect server username password))
@@ -38,5 +49,5 @@
                      (filter-headers-with-same-to-and-from
                       (filter-headers-with-from-address username all-messages))))
 
-  (write-to-file reminders "./current-reminders" #:mode 'text #:exists 'append )
+  (move-messages-to "reminders" reminders connection)
   )
