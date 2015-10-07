@@ -11,3 +11,4 @@ compiled/
 TAGS
 *.swp
 current-reminders
+config.json
