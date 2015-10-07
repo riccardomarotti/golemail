@@ -51,10 +51,11 @@
                              (filter-headers-with-same-to-and-from
                               (filter-headers-with-from-address username all-messages))))
 
-  (cond [(empty? message-reminders) "nothing to do"]
+  (cond [(empty? message-reminders) (sleep 60)]
         [else
          (move-messages-to "golemail" message-reminders connection)
          (define reminders (reminders-from-messages message-reminders (current-seconds)))
          (for-each (λ(reminder)
                       (write-to-file reminder "./current-reminders" #:mode 'text #:exists 'append))
-                   reminders)]))
+                   reminders)])
+  (loop server username password))
