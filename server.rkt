@@ -25,11 +25,10 @@
 (define (get-new-messages connection messages recent-messages-count)
   (define messages-numbers (map add1 (range messages)))
   (map (λ(message-and-uid message-number)
-    (message (first message-and-uid) (second message-and-uid) message-number))
+    (message (first message-and-uid) "Inbox" (second message-and-uid) message-number))
        (imap-get-messages connection
                           messages-numbers
                           '(header uid)) messages-numbers))
-
 
 (define (loop server username password)
   (define-values (connection messages newmessages) (connect server username password))
