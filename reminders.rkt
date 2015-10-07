@@ -13,7 +13,7 @@
   (map (λ(message) (reminder-from-message message now)) messages))
 
 (define (reminder-from-message message now)
-	(define subject (extract-field "Subject" (message-header message)))
+	(define subject (bytes->string/utf-8 (extract-field #"Subject" (message-header message))))
 	(define seconds-of-schedule (get-seconds-for (extract-schedule subject) now))
 	(reminder seconds-of-schedule "golemail" (message-uid message))
 	)

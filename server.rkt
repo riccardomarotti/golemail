@@ -2,8 +2,10 @@
 
 (require json
          net/imap
+         racket/date
          "structures.rkt"
-         "headers-analysis.rkt")
+         "headers-analysis.rkt"
+         "reminders.rkt")
 
 (define (start)
   (define config-in (open-input-file "config.json" #:mode 'text))
@@ -25,7 +27,7 @@
 (define (get-new-messages connection messages recent-messages-count)
   (define messages-positions (map add1 (range messages)))
   (map (λ(message-and-uid message-number)
-    (message (first message-and-uid) "Inbox" (second message-and-uid) message-number))
+          (message (first message-and-uid) "Inbox" (second message-and-uid) message-number))
        (imap-get-messages connection
                           messages-positions
                           '(header uid)) messages-positions))
@@ -45,9 +47,14 @@
   (define-values (connection messages newmessages) (connect server username password))
 
   (define all-messages (get-new-messages connection messages newmessages))
-  (define reminders (filter-reminders
-                     (filter-headers-with-same-to-and-from
-                      (filter-headers-with-from-address username all-messages))))
+  (define message-reminders (filter-reminders
+                             (filter-headers-with-same-to-and-from
+                              (filter-headers-with-from-address username all-messages))))
 
-  (move-messages-to "reminders" reminders connection)
-  )
+  (cond [(empty? message-reminders) "nothing to do"]
+        [else
+         (move-messages-to "golemail" message-reminders connection)
+         (define reminders (reminders-from-messages message-reminders (current-seconds)))
+         (for-each (λ(reminder)
+                      (write-to-file reminder "./current-reminders" #:mode 'text #:exists 'append))
+                   reminders)]))
