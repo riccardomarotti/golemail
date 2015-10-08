@@ -32,9 +32,14 @@
    #:tls? #t))
 
 (define (get-messages mailbox)
-    (define-values (connection messages newmessages) (connect mailbox))
-    (get-new-messages connection messages newmessages))
+  (define-values (connection messages newmessages) (connect mailbox))
+  (get-new-messages connection messages newmessages))
+
+(define (append-new message mailbox)
+  (define-values (connection messages newmessages) (connect mailbox))
+  (imap-append connection  mailbox message (list 'flagged)))
 
 
 (provide get-messages
-         move-messages-to)
+         move-messages-to
+         append-new)
