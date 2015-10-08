@@ -11,12 +11,18 @@
 
 
 (define (messages->reminders messages now)
-  (map (λ(message) (reminder-from-message message now)) messages))
+  (map (λ(message) (message->reminder message now)) messages))
 
-(define (reminder-from-message message now)
-  (define subject (bytes->string/utf-8 (extract-field #"Subject" (message-header message))))
-  (define seconds-of-schedule (get-seconds-for (extract-schedule subject) now))
-  (reminder seconds-of-schedule (~a (message-header message) (message-body message)) (message-uid message))
+(define (message->reminder message now)
+  (define full-subject (bytes->string/utf-8 (extract-field #"Subject" (message-header message))))
+  (define seconds-of-schedule (get-seconds-for (extract-schedule full-subject) now))
+  (define original-subject (extract-message full-subject))
+  (define remidner-header
+    (insert-field "Subject" original-subject
+                  (remove-field "Subject"
+                                (bytes->string/utf-8 (message-header message)))))
+
+  (reminder seconds-of-schedule (~a remidner-header (message-body message)) (message-uid message))
   )
 
 (define (reminders->file filename reminders)
