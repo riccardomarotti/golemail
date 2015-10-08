@@ -17,7 +17,7 @@
      (define source-message (message header "a body" "an uid" "a position"))
      (define expected-reminder (reminder 1444327200 "Subject: any text domani alle 20.>>>\r\n\r\na body" "an uid"))
 
-     (define actual-reminder (car (reminders-from-messages (list source-message) now)))
+     (define actual-reminder (car (messages->reminders (list source-message) now)))
 
      (check-equal? actual-reminder expected-reminder)
 

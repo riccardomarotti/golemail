@@ -15,7 +15,7 @@
 
   (cond [(empty? message-reminders) 'ok]
         [else
-         (define reminders (reminders-from-messages message-reminders (current-seconds)))
+         (define reminders (messages->reminders message-reminders (current-seconds)))
          (reminders->file "./current-reminders" reminders)
          (move-messages-to "golemail" message-reminders "Inbox")]
         )

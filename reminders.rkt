@@ -10,7 +10,7 @@
 
 
 
-(define (reminders-from-messages messages now)
+(define (messages->reminders messages now)
   (map (λ(message) (reminder-from-message message now)) messages))
 
 (define (reminder-from-message message now)
@@ -29,5 +29,5 @@
 
 (provide file->reminders
          reminders->file
-         reminders-from-messages
+         messages->reminders
          (struct-out reminder))
