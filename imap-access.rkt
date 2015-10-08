@@ -18,10 +18,10 @@
 (define (get-new-messages connection messages recent-messages-count)
   (define messages-positions (map add1 (range messages)))
   (map (λ(message-and-uid message-number)
-          (message (first message-and-uid) (second message-and-uid) message-number))
+          (message (first message-and-uid) (second message-and-uid) (third message-and-uid) message-number))
        (imap-get-messages connection
                           messages-positions
-                          '(header uid)) messages-positions))
+                          '(header body uid)) messages-positions))
 
 (define (connect mailbox)
   (imap-connect
