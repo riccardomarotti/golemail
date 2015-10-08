@@ -21,16 +21,16 @@
     (insert-field "Subject" original-subject
                   (remove-field "Subject"
                                 (bytes->string/utf-8 (message-header message)))))
-
+  
   (reminder seconds-of-schedule (~a remidner-header (message-body message)) (message-uid message))
   )
 
 (define (reminders->file filename reminders mode)
   (define reminders-list (map serialize reminders))
-
+  
   (if (empty? reminders-list)
       (delete-file filename)
-    (write-to-file reminders-list filename #:mode 'text #:exists mode)))
+      (write-to-file reminders-list filename #:mode 'text #:exists mode)))
 
 (define (file->reminders filename)
   (and (file-exists? filename) (map deserialize (file->value filename))))
