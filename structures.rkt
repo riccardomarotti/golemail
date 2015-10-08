@@ -1,5 +1,5 @@
 #lang racket
 
-(struct message (header mailbox uid position) #:transparent)
+(struct message (header uid position) #:transparent)
 
 (provide (struct-out message))
