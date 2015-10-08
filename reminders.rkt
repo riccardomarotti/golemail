@@ -25,13 +25,15 @@
   (reminder seconds-of-schedule (~a remidner-header (message-body message)) (message-uid message))
   )
 
-(define (reminders->file filename reminders)
+(define (reminders->file filename reminders mode)
   (define reminders-list (map serialize reminders))
 
-  (write-to-file reminders-list filename #:mode 'text #:exists 'append))
+  (if (empty? reminders-list)
+      (delete-file filename)
+    (write-to-file reminders-list filename #:mode 'text #:exists mode)))
 
 (define (file->reminders filename)
-  (map deserialize (file->value filename)))
+  (and (file-exists? filename) (map deserialize (file->value filename))))
 
 (provide file->reminders
          reminders->file
