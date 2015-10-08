@@ -13,11 +13,12 @@
                              (filter-headers-with-same-to-and-from
                               (filter-headers-with-from-address (username) all-messages))))
 
-  (cond [(empty? message-reminders) (sleep 60)]
+  (cond [(empty? message-reminders) 'ok]
         [else
-         (move-messages-to "golemail" message-reminders "Inbox")
          (define reminders (reminders-from-messages message-reminders (current-seconds)))
-         (for-each (λ(reminder)
-                      (write-to-file reminder "./current-reminders" #:mode 'text #:exists 'append))
-                   reminders)])
+         (reminders->file "./current-reminders" reminders)
+         (move-messages-to "golemail" message-reminders "Inbox")]
+        )
+
+  (sleep 60)
   (loop))
