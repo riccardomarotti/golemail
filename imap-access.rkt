@@ -38,8 +38,8 @@
    mailbox
    #:tls? #t))
 
-(define (get-messages mailbox messages-to-get-positions-from)
-  (define positions (map (λ(message) (message-position message)) messages-to-get-positions-from))
+(define (add-body-to messages-without-body mailbox)
+  (define positions (map (λ(message) (message-position message)) messages-without-body))
 
   (define-values (connection messages newmessages) (connect mailbox))
   (get-new-messages connection positions))
@@ -53,7 +53,7 @@
   (imap-append connection  mailbox message (list 'flagged)))
 
 
-(provide get-messages
+(provide add-body-to
          get-headers
          move-messages-to
          append-new)

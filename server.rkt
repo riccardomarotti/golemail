@@ -29,7 +29,7 @@
 
   (or (empty? message-reminders-headers)
       (let()
-        (define message-reminders (get-messages "Inbox" message-reminders-headers))
+        (define message-reminders (add-body-to message-reminders-headers "Inbox"))
         (reminders->file "./current-reminders" (messages->reminders message-reminders (current-seconds)))
         (move-messages-to "golemail" message-reminders "Inbox")
         ))
