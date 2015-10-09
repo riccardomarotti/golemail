@@ -22,13 +22,14 @@
   )
 
 (define (loop)
-  (define all-messages (get-messages "Inbox"))
-  (define message-reminders (filter-reminders
+  (define all-headers (get-headers "Inbox"))
+  (define message-reminders-headers (filter-reminders
                              (filter-headers-with-same-to-and-from
-                              (filter-headers-with-from-address (username) all-messages))))
+                              (filter-headers-with-from-address (username) all-headers))))
 
-  (or (empty? message-reminders)
-      (begin
+  (or (empty? message-reminders-headers)
+      (let()
+        (define message-reminders (get-messages "Inbox" message-reminders-headers))
         (reminders->file "./current-reminders" (messages->reminders message-reminders (current-seconds)))
         (move-messages-to "golemail" message-reminders "Inbox")
         ))
