@@ -18,7 +18,7 @@
   (define filtered-reminders (filter
                               (λ(reminder) (not (equal? (reminder-uid reminder) (reminder-uid reminder-to-delete))))
                               all-reminders))
-  (reminders->file "./current-reminders" filtered-reminders 'replace)
+  (reminders->file! "./current-reminders" filtered-reminders)
   )
 
 (define (loop)
@@ -26,15 +26,15 @@
   (define message-reminders (filter-reminders
                              (filter-headers-with-same-to-and-from
                               (filter-headers-with-from-address (username) all-messages))))
-  
+
   (or (empty? message-reminders)
       (begin
-        (reminders->file "./current-reminders" (messages->reminders message-reminders (current-seconds)) 'append)
+        (reminders->file "./current-reminders" (messages->reminders message-reminders (current-seconds)))
         (move-messages-to "golemail" message-reminders "Inbox")
         ))
-  
+
   (define saved-reminders (file->reminders "./current-reminders"))
   (and saved-reminders (for-each check-reminder saved-reminders))
-  
-  (sleep 60)
+
+  (sleep 10)
   (loop))

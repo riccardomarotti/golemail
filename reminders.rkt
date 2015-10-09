@@ -21,13 +21,19 @@
     (insert-field "Subject" original-subject
                   (remove-field "Subject"
                                 (bytes->string/utf-8 (message-header message)))))
-  
+
   (reminder seconds-of-schedule (~a remidner-header (message-body message)) (message-uid message))
   )
 
-(define (reminders->file filename reminders mode)
+(define (reminders->file filename reminders)
+  (reminders->file/mode filename reminders 'append))
+
+(define (reminders->file! filename reminders)
+  (reminders->file/mode filename reminders 'replace))
+
+(define (reminders->file/mode filename reminders mode)
   (define reminders-list (map serialize reminders))
-  
+
   (if (empty? reminders-list)
       (delete-file filename)
       (write-to-file reminders-list filename #:mode 'text #:exists mode)))
@@ -37,5 +43,6 @@
 
 (provide file->reminders
          reminders->file
+         reminders->file!
          messages->reminders
          (struct-out reminder))
