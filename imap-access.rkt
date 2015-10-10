@@ -17,7 +17,7 @@
 
 (define (get-new-messages connection positions)
   (map (λ(message-and-uid message-number)
-          (message (first message-and-uid) (second message-and-uid) (third message-and-uid) message-number))
+         (message (first message-and-uid) (second message-and-uid) (third message-and-uid) message-number))
        (imap-get-messages connection
                           positions
                           '(header body uid)) positions))
@@ -25,7 +25,7 @@
 (define (get-new-headers connection messages recent-messages-count)
   (define messages-positions (map add1 (range messages)))
   (map (λ(message-and-uid message-number)
-          (message (first message-and-uid) "" (second message-and-uid) message-number))
+         (message (first message-and-uid) "" (second message-and-uid) message-number))
        (imap-get-messages connection
                           messages-positions
                           '(header uid)) messages-positions))
@@ -50,16 +50,17 @@
 (define (get-headers mailbox)
   (define-values (connection messages newmessages) (connect mailbox))
   (begin0
-   (get-new-headers connection messages newmessages)
-   (imap-disconnect connection)
-   ))
+    (get-new-headers connection messages newmessages)
+    (imap-disconnect connection)
+    ))
 
 (define (append-new message mailbox)
   (define-values (connection messages newmessages) (connect mailbox))
   (begin
     (imap-append connection mailbox message (list 'flagged))
-  (imap-disconnect connection)
+    (imap-disconnect connection)
     ))
+
 
 
 (provide add-body-to
