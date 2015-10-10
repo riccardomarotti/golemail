@@ -42,15 +42,24 @@
   (define positions (map (λ(message) (message-position message)) messages-without-body))
 
   (define-values (connection messages newmessages) (connect mailbox))
-  (get-new-messages connection positions))
+  (begin0
+    (get-new-messages connection positions)
+    (imap-disconnect connection)
+    ))
 
 (define (get-headers mailbox)
   (define-values (connection messages newmessages) (connect mailbox))
-  (get-new-headers connection messages newmessages))
+  (begin0
+   (get-new-headers connection messages newmessages)
+   (imap-disconnect connection)
+   ))
 
 (define (append-new message mailbox)
   (define-values (connection messages newmessages) (connect mailbox))
-  (imap-append connection  mailbox message (list 'flagged)))
+  (begin
+    (imap-append connection mailbox message (list 'flagged))
+  (imap-disconnect connection)
+    ))
 
 
 (provide add-body-to
