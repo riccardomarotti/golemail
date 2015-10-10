@@ -27,8 +27,10 @@
 
 (define (extract-message string)
   (define timing-match (regexp-match (timing-regexp) string))
-  (if (not timing-match)
-      (string-replace string (golem-tag) "")
-      (string-trim (substring string 0 (- (string-length string) (string-length (first timing-match)))))))
+  (cond [(not timing-match) (string-replace string (golem-tag) "")]
+        [else
+         (and (regexp-match "^Fwd: " string) (set! string (string-replace string "Fwd: " "" #:all? #f)))
+         (string-trim (substring string 0 (- (string-length string) (string-length (first timing-match)))))]
+        ))
 
 (provide extract-schedule extract-message golem-tag)
