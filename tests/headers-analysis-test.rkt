@@ -50,7 +50,7 @@
 
     (test-case
      "filter reminders"
-     (define not-a-reminder-header (insert-field #"Subject" #"any subejct" (string->bytes/utf-8 empty-header)))
+     (define not-a-reminder-header (insert-field #"Subject" #"any subject" (string->bytes/utf-8 empty-header)))
      (define not-a-reminder-message (message not-a-reminder-header "any body" "any id" "any position"))
      (define a-reminder-header (insert-field #"Subject" #"any text oggi alle 10.>>>" (string->bytes/utf-8 empty-header)))
      (define a-reminder-message (message a-reminder-header "a reminder body" "a reminder id" "any other position"))
@@ -60,6 +60,21 @@
 
      (check-equal? (length filtered-messages) 1)
      (check-equal? (car filtered-messages) a-reminder-message))
+
+    (test-case
+     "filter subject"
+     (define header1 (insert-field #"Subject" #"subject 1" (string->bytes/utf-8 empty-header)))
+     (define header2 (insert-field #"Subject" #"subject 2" (string->bytes/utf-8 empty-header)))
+     (define header3 (insert-field #"Subject" #"subject 3" (string->bytes/utf-8 empty-header)))
+     (define message1 (message header1 "any body 1" "any id 1" "any position 1"))
+     (define message2 (message header2 "any body 2" "any id 2" "any position 2"))
+     (define message3 (message header3 "any body 3" "any id 3" "any position 3"))
+     (define messages-to-filter (list message1 message2 message3))
+
+     (define filtered-messages (filter-headers-with-subject "subject 2" messages-to-filter))
+
+     (check-equal? (length filtered-messages) 1)
+     (check-equal? (car filtered-messages) message2))
 
     ))
 
