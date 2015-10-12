@@ -16,7 +16,7 @@
 (define (remove-from-saved reminder-to-delete)
   (define all-reminders (file->reminders "./current-reminders"))
   (define filtered-reminders (filter
-                              (λ(reminder) (not (equal? (reminder-uid reminder) (reminder-uid reminder-to-delete))))
+                              (λ(reminder) (not (equal? (reminder-uids reminder) (reminder-uids reminder-to-delete))))
                               all-reminders))
   (reminders->file! "./current-reminders" filtered-reminders)
   )

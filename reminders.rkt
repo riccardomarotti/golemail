@@ -6,7 +6,7 @@
          "parsing.rkt"
          "schedule.rkt")
 
-(serializable-struct reminder (seconds message uid) #:transparent)
+(serializable-struct reminder (seconds message uids) #:transparent)
 
 
 
@@ -22,7 +22,7 @@
                   (remove-field "Subject"
                                 (bytes->string/utf-8 (message-header message)))))
 
-  (reminder seconds-of-schedule (~a remidner-header (message-body message)) (message-uid message))
+  (reminder seconds-of-schedule (~a remidner-header (message-body message)) (list (message-uid message)))
   )
 
 (define (reminders->file filename reminders)
