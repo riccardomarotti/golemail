@@ -4,6 +4,8 @@
          "headers-analysis.rkt"
          "reminders.rkt"
          "configuration.rkt"
+         "structures.rkt"
+         net/head
          )
 
 (define (check-reminder reminder)
@@ -21,17 +23,42 @@
   (reminders->file! "./current-reminders" filtered-reminders)
   )
 
+(define (update-reminders-with-original-messages current-reminders all-headers output-reminders)
+  (if (empty? current-reminders) output-reminders
+      (let()
+        (define current-reminder (first current-reminders))
+        (define original-message (filter (λ(message)
+                                           (equal?
+                                            (reminder-original-subject current-reminder)
+                                            (bytes->string/utf-8 (extract-field #"Subject" (message-header message)))))
+                                         all-headers
+                                         ))
+        (if (empty? original-message)
+            (update-reminders-with-original-messages (rest current-reminders) all-headers (cons current-reminder output-reminders))
+            (let()
+              (define full-original-message (first (add-body-to original-message "Inbox")))
+              (define new-reminder (struct-copy reminder current-reminder
+                                                [message (~a
+                                                  (message-header full-original-message)
+                                                  (message-body full-original-message))]))
+              (update-reminders-with-original-messages (rest current-reminders) all-headers (cons new-reminder output-reminders))
+              )))))
+
+
 (define (loop)
   (define all-headers (get-headers "Inbox"))
   (define message-reminders-headers (filter-reminders
-                             (filter-headers-with-same-to-and-from
-                              (filter-headers-with-from-address (username) all-headers))))
+                                     (filter-headers-with-same-to-and-from
+                                      (filter-headers-with-from-address (username) all-headers))))
 
   (or (empty? message-reminders-headers)
       (let()
         (define message-reminders (add-body-to message-reminders-headers "Inbox"))
-        (reminders->file "./current-reminders" (messages->reminders message-reminders (current-seconds)))
+        (define reminders (messages->reminders message-reminders (current-seconds)))
+        (set! reminders (update-reminders-with-original-messages reminders all-headers '()))
+        (reminders->file "./current-reminders" reminders)
         (move-messages-to "golemail" message-reminders "Inbox")
+
         ))
 
   (define saved-reminders (file->reminders "./current-reminders"))
