@@ -37,27 +37,29 @@
             (update-reminders-with-original-messages (rest current-reminders) all-headers (cons current-reminder output-reminders))
             (let()
               (define full-original-message (first (add-body-to original-message "Inbox")))
+              (move-messages-to "golemail" (list full-original-message) "Inbox")
               (define new-reminder (struct-copy reminder current-reminder
                                                 [message (~a
-                                                  (message-header full-original-message)
-                                                  (message-body full-original-message))]))
+                                                          (message-header full-original-message)
+                                                          (message-body full-original-message))]))
               (update-reminders-with-original-messages (rest current-reminders) all-headers (cons new-reminder output-reminders))
               )))))
 
 
+
 (define (loop)
-  (define all-headers (get-headers "Inbox"))
   (define message-reminders-headers (filter-reminders
                                      (filter-headers-with-same-to-and-from
-                                      (filter-headers-with-from-address (username) all-headers))))
+                                      (filter-headers-with-from-address (username) (get-headers "Inbox")))))
 
   (or (empty? message-reminders-headers)
       (let()
         (define message-reminders (add-body-to message-reminders-headers "Inbox"))
-        (define reminders (messages->reminders message-reminders (current-seconds)))
-        (set! reminders (update-reminders-with-original-messages reminders all-headers '()))
-        (reminders->file "./current-reminders" reminders)
         (move-messages-to "golemail" message-reminders "Inbox")
+        (define reminders (messages->reminders message-reminders (current-seconds)))
+        (set! reminders (update-reminders-with-original-messages reminders (get-headers "Inbox") '()))
+        (reminders->file "./current-reminders" reminders)
+
 
         ))
 
