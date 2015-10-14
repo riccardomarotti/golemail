@@ -58,9 +58,8 @@
         (move-messages-to "golemail" message-reminders "Inbox")
         (define reminders (messages->reminders message-reminders (current-seconds)))
         (set! reminders (update-reminders-with-original-messages reminders (get-headers "Inbox") '()))
-        (reminders->file "./current-reminders" reminders)
-
-
+        (define old-reminders (file->reminders "./current-reminders"))
+        (reminders->file! "./current-reminders" (append old-reminders reminders))
         ))
 
   (define saved-reminders (file->reminders "./current-reminders"))
