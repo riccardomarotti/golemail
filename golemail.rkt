@@ -1,13 +1,22 @@
 #lang racket
 
-(require "server.rkt")
+(require "client.rkt"
+         "configuration.rkt"
+         "headers-analysis.rkt"
+         "imap-access.rkt"
+         "parsing.rkt"
+         "reminders.rkt"
+         "schedule.rkt"
+         "structures.rkt")
+
 
 (define (handled-loop)
-  (with-handlers ([exn? (λ(exn)
+  (with-handlers ([exn:break? (λ(exn) 'ciao)]
+                  [exn:fail? (λ(exn)
                           (let()
-                            (displayln exn)
-                            (sleep 10)
-                            (handled-loop)))])
+                            (displayln (exn-message exn))
+                            (handled-loop)
+                            ))])
     (loop)
     ))
 
