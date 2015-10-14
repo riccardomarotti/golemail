@@ -135,6 +135,20 @@
      (check-equal? (date-second actual-result-date) 0))
 
     (test-case
+     "alle 11"
+     (define current 1443340127);"Sunday, September 27th, 2015 9:48:47am"
+
+     (define actual-result-seconds (get-seconds-for "aLle 11" current))
+     (define actual-result-date (seconds->date actual-result-seconds))
+
+     (check-equal? (date-hour actual-result-date) 11)
+     (check-equal? (date-day actual-result-date) 27)
+     (check-equal? (date-month actual-result-date) 9)
+     (check-equal? (date-year actual-result-date) 2015)
+     (check-equal? (date-minute actual-result-date) 0)
+     (check-equal? (date-second actual-result-date) 0))
+
+    (test-case
      "lunedì alle 10:30"
      (define current 1443599327);"Wednesday, September 30th, 2015 9:48:47am"
 

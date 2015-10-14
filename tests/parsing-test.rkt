@@ -35,6 +35,7 @@
     (check-equal? (extract-message "") "")
     (check-equal? (extract-message "any text.>>>") "any text")
     (check-equal? (extract-message "any text tra 1 ora.>>>") "any text")
+    (check-equal? (extract-message "any text alle 10.>>>") "any text")
     (check-equal? (extract-message "Fwd: any text tra 1 ora.>>>") "any text")
     (check-equal? (extract-message "Fwd: any Fwd: text tra 1 ora.>>>") "any Fwd: text"))
 

@@ -24,10 +24,14 @@
       [(regexp-match "^min.*" type) 60]
       [(regexp-match "^or.*" type) 3600]
       [else 86400]))
-  
+
   (+ current-second (* multiplier (string->number value))))
 
+
 (define (oggi when value current-second)
+  (alle value current-second))
+
+(define (alle value current-second)
   (define h (string->number (first (parse-time value))))
   (define m (string->number (second (parse-time value))))
   (date->seconds (struct-copy date (seconds->date current-second)
