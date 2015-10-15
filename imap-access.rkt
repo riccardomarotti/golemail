@@ -13,7 +13,8 @@
   (define messages-positions (map (λ(message) (message-position message)) messages))
   (imap-copy connection messages-positions mailbox)
   (mark-as 'deleted connection messages-positions)
-  (imap-expunge connection))
+  (imap-expunge connection)
+  (imap-disconnect connection))
 
 (define (get-new-messages connection positions)
   (map (λ(message-and-uid message-number)
