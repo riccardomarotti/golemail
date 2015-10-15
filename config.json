@@ -3,5 +3,6 @@
 	"username": "",
 	"port": 993,
 	"password": "",
-	"tag": ".>>>"
+	"tag": ".>>>",
+	"polling-interval": 30
 }
