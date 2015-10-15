@@ -47,7 +47,7 @@
 
 
 
-(define (loop)
+(define (main)
   (define message-reminders-headers (filter-reminders
                                      (filter-headers-with-same-to-and-from
                                       (filter-headers-with-from-address (username) (get-headers "Inbox")))))
@@ -64,9 +64,7 @@
 
   (define saved-reminders (file->reminders "./current-reminders"))
   (and saved-reminders (for-each check-reminder saved-reminders))
-
-  (sleep 10)
-  (loop))
+  )
 
 
-(provide loop)
+(provide main)

@@ -9,16 +9,7 @@
          "schedule.rkt"
          "structures.rkt")
 
-
-(define (handled-loop)
-  (with-handlers ([exn:break? (λ(exn) 'ciao)]
-                  [exn:fail? (λ(exn)
-                          (let()
-                            (displayln (exn-message exn))
-                            (handled-loop)
-                            ))])
-    (loop)
-    ))
-
-
-(handled-loop)
+(let loop()
+    (thread-wait (thread main))
+    (sleep 10)
+    (loop))
