@@ -44,7 +44,7 @@ For security reason, there will probably be the needing of a sort of configurabl
 
 The project is still in its very early stage.
 
-A basic server is implemented, but I still don't use it.
+A basic server is implemented, and I started using it.
 I plan to release the first usable version by week 43.
 
 ###Contacts
