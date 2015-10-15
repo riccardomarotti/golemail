@@ -1,6 +1,8 @@
 #lang racket
 
-(define golem-tag (make-parameter ".>>>"))
+(require "configuration.rkt")
+
+(define golem-tag (make-parameter (tag)))
 
 (define week-day-regexp
   "(?i:luned[iì]|marted[iì]|mercoled[iì]|gioved[iì]|venerd[iì]|sabato|domenica|oggi|domani|dopodomani)")
