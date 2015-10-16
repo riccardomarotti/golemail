@@ -24,6 +24,7 @@
 
     (let loop()
       (thread-wait (thread main))
-      (sleep 10)
+      (collect-garbage)
+      (sleep (polling-interval))
       (loop))
     )
