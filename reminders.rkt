@@ -1,12 +1,11 @@
 #lang racket
 
 (require net/head
-         racket/serialize
          "structures.rkt"
          "parsing.rkt"
          "schedule.rkt")
 
-(serializable-struct reminder (seconds message original-subject uids) #:transparent)
+(struct reminder (seconds message original-subject uids) #:prefab)
 
 
 
@@ -29,17 +28,15 @@
   (reminders->file/mode filename reminders 'replace))
 
 (define (reminders->file/mode filename reminders mode)
-  (define reminders-list (serialize reminders))
-
   (if (empty? reminders)
       (delete-file filename)
-      (write-to-file reminders-list filename #:mode 'text #:exists mode)))
+      (write-to-file reminders filename #:mode 'text #:exists mode)))
 
 (define (file->reminders filename)
   (and (file-exists? filename)
     (let()
       (define in (open-input-file filename))
-      (define reminders(deserialize (read in)))
+      (define reminders (read in))
       (close-input-port in)
       reminders)))
 
