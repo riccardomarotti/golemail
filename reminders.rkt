@@ -36,7 +36,12 @@
       (write-to-file reminders-list filename #:mode 'text #:exists mode)))
 
 (define (file->reminders filename)
-  (and (file-exists? filename) (deserialize (read (open-input-file filename)))))
+  (and (file-exists? filename)
+    (let()
+      (define in (open-input-file filename))
+      (define reminders(deserialize (read in)))
+      (close-input-port in)
+      reminders)))
 
 (provide file->reminders
          reminders->file!
