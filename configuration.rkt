@@ -3,34 +3,29 @@
 (require json
          net/imap)
 
-(define (read-config)
+
+(define password (make-parameter ""))
+
+(define (read-config field)
   (define config-in (open-input-file "config.json" #:mode 'text))
   (define config (read-json config-in))
   (close-input-port config-in)
 
   (imap-port-number (hash-ref config 'port))
 
-  (list
-   (hash-ref config 'server)
-   (hash-ref config 'username)
-   (hash-ref config 'password)
-   (hash-ref config 'tag)
-   (hash-ref config 'polling-interval)))
+  (hash-ref config field))
 
 (define (server)
-  (first (read-config)))
+  (read-config 'server))
 
 (define (username)
-  (second (read-config)))
-
-(define (password)
-  (third (read-config)))
+  (read-config 'username))
 
 (define (tag)
-  (fourth (read-config)))
+  (read-config 'tag))
 
 (define (polling-interval)
-  (fifth (read-config)))
+  (read-config 'polling-interval))
 
 
 

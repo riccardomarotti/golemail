@@ -2,7 +2,6 @@
 	"server": "",
 	"username": "",
 	"port": 993,
-	"password": "",
 	"tag": ".>>>",
 	"polling-interval": 30
 }
