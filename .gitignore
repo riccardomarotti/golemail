@@ -2,6 +2,7 @@
 /bundle/
 /add-on/
 /extra-pkgs/
+releases
 compiled/
 *~
 \#*
