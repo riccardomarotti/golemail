@@ -40,7 +40,13 @@
       (close-input-port in)
       reminders)))
 
+(define (merge-reminders old-reminders new-reminders)
+  (define new-subjects (map (λ(rem) (reminder-original-subject rem)) new-reminders))
+  (define filtered-old-reminders (filter (λ(rem) (not (member (reminder-original-subject rem) new-subjects))) old-reminders))
+  (append filtered-old-reminders new-reminders))
+
 (provide file->reminders
          reminders->file!
          messages->reminders
+         merge-reminders
          (struct-out reminder))

@@ -59,7 +59,7 @@
         (define reminders (messages->reminders message-reminders (current-seconds)))
         (set! reminders (update-reminders-with-original-messages reminders (get-headers "Inbox") '()))
         (define old-reminders (or (file->reminders "./current-reminders") '()))
-        (reminders->file! "./current-reminders" (append old-reminders reminders))
+        (reminders->file! "./current-reminders" (merge-reminders old-reminders reminders))
         ))
 
   (define saved-reminders (file->reminders "./current-reminders"))
