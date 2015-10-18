@@ -27,6 +27,7 @@
     (check-equal? (extract-schedule "any text oggi.>>>") "oggi")
     (check-equal? (extract-schedule "any text domaNi.>>>") "domani")
     (check-equal? (extract-schedule "Fwd: any text domaNi.>>>") "domani")
+    (check-equal? (extract-schedule "Re: any text domaNi.>>>") "domani")
     (check-equal? (extract-schedule "any text sabato alle 17.>>>") "sabato alle 17"))
 
    (test-suite
@@ -37,7 +38,11 @@
     (check-equal? (extract-message "any text tra 1 ora.>>>") "any text")
     (check-equal? (extract-message "any text alle 10.>>>") "any text")
     (check-equal? (extract-message "Fwd: any text tra 1 ora.>>>") "any text")
-    (check-equal? (extract-message "Fwd: any Fwd: text tra 1 ora.>>>") "any Fwd: text"))
+    (check-equal? (extract-message "Fwd: any Fwd: text tra 1 ora.>>>") "any Fwd: text")
+    (check-equal? (extract-message "Fwd: any Re: text tra 1 ora.>>>") "any Re: text")
+    (check-equal? (extract-message "Re: any text tra 1 ora.>>>") "any text")
+    (check-equal? (extract-message "Re: any Fwd: text tra 1 ora.>>>") "any Fwd: text")
+    )
 
 
    (test-suite
