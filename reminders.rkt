@@ -1,6 +1,7 @@
 #lang racket
 
 (require net/head
+         net/unihead
          "structures.rkt"
          "parsing.rkt"
          "schedule.rkt")
@@ -13,7 +14,7 @@
   (map (λ(message) (message->reminder message now)) messages))
 
 (define (message->reminder message now)
-  (define full-subject (bytes->string/utf-8 (extract-field #"Subject" (message-header message))))
+  (define full-subject (decode-for-header (bytes->string/utf-8 (extract-field #"Subject" (message-header message)))))
   (define seconds-of-schedule (get-seconds-for (extract-schedule full-subject) now))
   (define original-subject (extract-message full-subject))
   (define remidner-header

@@ -23,11 +23,15 @@
 
 (define (timing-regexp) (string-join (timing-regexps) "|"))
 
+(define (clean string)
+  (string-replace string "\r\n\t" "" #:all? #t))
+
 (define (extract-schedule string)
-  (define result (regexp-match (timing-regexp) string))
+  (define result (regexp-match (timing-regexp) (clean string)))
   (and result (string-downcase (string-replace (first result) (golem-tag) ""))))
 
 (define (extract-message string)
+  (set! string (clean string))
   (define timing-match (regexp-match (timing-regexp) string))
   (cond [(not timing-match) (string-replace string (golem-tag) "")]
         [else
