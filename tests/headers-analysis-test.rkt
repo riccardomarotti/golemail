@@ -6,6 +6,8 @@
          "../headers-analysis.rkt"
          "../structures.rkt")
 
+(require/expose "../headers-analysis.rkt" (subject-of))
+
 (define all
   (list
    (test-suite
@@ -75,6 +77,14 @@
 
      (check-equal? (length filtered-messages) 1)
      (check-equal? (car filtered-messages) message2))
+
+    (test-case
+     "utf-8 encoding"
+     (define header (insert-field #"Subject" #"=?utf-8?B?WUFOU1MgNjAg4oCTIEhvdyB0byB0dXJuIHlvdXIgZmVhcnMgYW5kIGFueGlldGllcyBpbnRvIHBvc2l0?==?utf-8?B?aXZpdHkgYW5kIHByb2R1Y3Rpdml0eSB3aXRoIGNvZ25pdGl2ZSByZWZyYW1pbmcgYWxsZSAxOC4+Pj4=?=" (string->bytes/utf-8 empty-header)))
+     (define amessage (message header "any body" "any id" "any position"))
+
+     (check-equal? (subject-of amessage) "YANSS 60 – How to turn your fears and anxieties into positivity and productivity with cognitive reframing alle 18.>>>")
+     )
 
     ))
 

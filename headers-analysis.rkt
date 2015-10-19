@@ -1,12 +1,13 @@
 #lang racket
 
 (require net/head
+         net/unihead
          "schedule.rkt"
          "parsing.rkt"
          "structures.rkt")
 
 (define (subject-of message)
-  (bytes->string/utf-8(extract-field #"Subject"(message-header message))))
+  (decode-for-header (bytes->string/utf-8 (extract-field #"Subject"(message-header message)))))
 
 (define (filter-reminders messages-list)
   (filter (λ(message) (not (equal? #f (extract-schedule (subject-of message))))) messages-list))
