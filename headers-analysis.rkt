@@ -7,7 +7,7 @@
          "structures.rkt")
 
 (define (subject-of message)
-  (decode-for-header (bytes->string/utf-8 (extract-field #"Subject"(message-header message)))))
+  (decode-for-header (clean (bytes->string/utf-8 (extract-field #"Subject"(message-header message))))))
 
 (define (filter-reminders messages-list)
   (filter (λ(message) (not (equal? #f (extract-schedule (subject-of message))))) messages-list))
@@ -34,4 +34,5 @@
 (provide filter-headers-with-same-to-and-from
          filter-headers-with-from-address
          filter-headers-with-subject
-         filter-reminders)
+         filter-reminders
+         subject-of)

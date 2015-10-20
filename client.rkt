@@ -23,14 +23,17 @@
   (reminders->file! (username) filtered-reminders)
   )
 
+(define (string-remove-spaces string)
+  (string-replace string " " "" #:all? #t))
+
 (define (update-reminders-with-original-messages current-reminders all-headers output-reminders)
   (if (empty? current-reminders) output-reminders
       (let()
         (define current-reminder (first current-reminders))
         (define original-message (filter (λ(message)
                                            (equal?
-                                            (reminder-original-subject current-reminder)
-                                            (bytes->string/utf-8 (extract-field #"Subject" (message-header message)))))
+                                            (string-remove-spaces (reminder-original-subject current-reminder))
+                                            (string-remove-spaces (subject-of message))))
                                          all-headers
                                          ))
         (if (empty? original-message)

@@ -40,4 +40,4 @@
          (string-trim (substring string 0 (- (string-length string) (string-length (first timing-match)))))]
         ))
 
-(provide extract-schedule extract-message golem-tag)
+(provide extract-schedule extract-message golem-tag clean)

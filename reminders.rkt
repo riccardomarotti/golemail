@@ -4,7 +4,8 @@
          net/unihead
          "structures.rkt"
          "parsing.rkt"
-         "schedule.rkt")
+         "schedule.rkt"
+         "headers-analysis.rkt")
 
 (struct reminder (seconds message original-subject uids) #:prefab)
 
@@ -14,7 +15,7 @@
   (map (λ(message) (message->reminder message now)) messages))
 
 (define (message->reminder message now)
-  (define full-subject (decode-for-header (bytes->string/utf-8 (extract-field #"Subject" (message-header message)))))
+  (define full-subject (subject-of message))
   (define seconds-of-schedule (get-seconds-for (extract-schedule full-subject) now))
   (define original-subject (extract-message full-subject))
   (define remidner-header
