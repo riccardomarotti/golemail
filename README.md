@@ -24,7 +24,7 @@ you can forward it to yourself, modifying the subject with something like:
 
     "Fdw: Invoice n. 42 - tomorrow at 5pm"
 
-Now, the little server that I'm writing, `Golemail`, will check your inbox and
+Now, the little client that I'm writing, `Golemail`, will check your inbox and
 
 - it will recognize your forwarded email
 - it will hide somewhere the forward and the original email
@@ -44,7 +44,7 @@ For security reason, there will probably be the needing of a sort of configurabl
 
 The project is still in its very early stage.
 
-A basic server is implemented, and I started using it.
+A basic client is implemented, and I started using it.
 I plan to release the first usable version by week 43.
 
 ###Contacts
