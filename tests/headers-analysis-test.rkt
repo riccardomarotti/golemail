@@ -6,8 +6,6 @@
          "../headers-analysis.rkt"
          "../structures.rkt")
 
-(require/expose "../headers-analysis.rkt" (subject-of))
-
 (define all
   (list
    (test-suite
