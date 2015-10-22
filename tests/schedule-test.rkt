@@ -198,6 +198,21 @@
      (check-equal? (date-day actual-result-date) 4))
 
 
+    (test-case
+     "day with no time"
+     (define current 1443599327);"Wednesday, September 30th, 2015 9:48:47am"
+     (define expcted-seconds 1443685680);"Wednesday, September 30th, 2015 9:48:00am"
+     (define actual-result-seconds (get-seconds-for "domani" current))
+
+     (check-equal? actual-result-seconds expcted-seconds)
+
+     (set! actual-result-seconds (get-seconds-for "il 2 novembre" current))
+     (set! expcted-seconds 1446454080);"Friday, October 30th, 2015 9:48:00am"
+
+     (check-equal? actual-result-seconds expcted-seconds)
+     )
+
+
     )))
 
   (for-each run-tests all)

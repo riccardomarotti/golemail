@@ -18,7 +18,7 @@
                      "novembre"  11
                      "dicembre"  12))
 
-(define (tra value type current-second)
+(define (tra value type #:current-second current-second)
   (define multiplier
     (cond
       [(regexp-match "^min.*" type) 60]
@@ -28,10 +28,10 @@
   (+ current-second (* multiplier (string->number value))))
 
 
-(define (oggi when value current-second)
-  (alle value current-second))
+(define (oggi when value #:current-second current-second)
+  (alle value #:current-second current-second))
 
-(define (alle value current-second)
+(define (alle value #:current-second current-second)
   (define h (string->number (first (parse-time value))))
   (define m (string->number (second (parse-time value))))
   (date->seconds (struct-copy date (seconds->date current-second)
@@ -52,39 +52,41 @@
                               [minute m]
                               [second 0])))
 
-(define (luned when value current-second)
+(define (luned [when "any value"] [value #f] #:current-second current-second)
   (on-day 1 value current-second))
 
-(define (marte when value current-second)
+(define (marte [when "any value"] [value #f] #:current-second current-second)
   (on-day 2 value current-second))
 
-(define (merco when value current-second)
+(define (merco [when "any value"] [value #f] #:current-second current-second)
   (on-day 3 value current-second))
 
-(define (giove when value current-second)
+(define (giove [when "any value"] [value #f] #:current-second current-second)
   (on-day 4 value current-second))
 
-(define (vener when value current-second)
+(define (vener [when "any value"] [value #f] #:current-second current-second)
   (on-day 5 value current-second))
 
-(define (sabat when value current-second)
+(define (sabat [when "any value"] [value #f] #:current-second current-second)
   (on-day 6 value current-second))
 
-(define (domen when value current-second)
+(define (domen [when "any value"] [value #f] #:current-second current-second)
   (on-day 0 value current-second))
 
 (define (in-days number-of-days value current-second)
+  (or value (set! value (get-time-string current-second)))
   (define h (string->number (first (parse-time value))))
   (define m (string->number (second (parse-time value))))
   (+ (* 86400 number-of-days) (date->seconds (struct-copy date (seconds->date current-second) [second 0] [minute m] [hour h]))))
 
-(define (doman when value current-second)
+(define (doman [when "any value"] [value #f] #:current-second current-second)
   (in-days 1 value current-second))
 
-(define (dopod when value current-second)
+(define (dopod when value #:current-second current-second)
   (in-days 2 value current-second))
 
-(define (il day month when hour current-second)
+(define (il day month [when "any value"] [hour #f] #:current-second current-second)
+  (or hour (set! hour (get-time-string current-second)))
   (define h (string->number (first (parse-time hour))))
   (define m (string->number (second (parse-time hour))))
   (define result-seconds (date->seconds (struct-copy date (seconds->date current-second)
@@ -105,6 +107,11 @@
   (and (empty? minutes) (set! minutes (list "0")))
   (cons (car tokens) minutes))
 
+(define (get-time-string seconds)
+  (~a
+    (number->string (date-hour (seconds->date seconds)))
+    ":"
+    (number->string (date-minute (seconds->date seconds)))))
 
 
 (define (get-seconds-for schedule-string current-second)
@@ -112,7 +119,7 @@
   (define command-list (string-split schedule-string))
   (define function (substring (first command-list) 0 (min (string-length (first command-list)) 5)))
   (set! command-list (cons (string->symbol function) (rest command-list)))
-  (set! command-list (append command-list (list current-second)))
+  (set! command-list (append command-list (list '#:current-second current-second)))
   (eval command-list ns))
 
 (provide get-seconds-for)
