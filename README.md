@@ -58,7 +58,7 @@ To install:
 
 - download the latest tgz
 - extract it somewhere
-    tar xvfz golemail-v0.0.1.tgz
+    tar xvfz golemail-0.0.1.tgz
 - a `golemail` directory will be created
 - modify `config.json` located in `golemail/bin`
 - you have to create a `golemail` folder in your mailbox (the next version will create it for you and the folder name will be configurable)
