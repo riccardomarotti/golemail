@@ -10,9 +10,7 @@ What I really like is that you can delay an email or create a reminder that will
 But... you can use it only with a Gmail account.
 
 
-###So?
-
-So I thought of a system like this...
+###How it works?
 
 When you receive an email that you can't manage now, you forward it to yourself, and you append a tag to the subject where you specify when it has to be scheduled.
 
@@ -22,23 +20,24 @@ Let's say you receive an email with subject
 
 you can forward it to yourself, modifying the subject with something like:
 
-    "Fdw: Invoice n. 42 - tomorrow at 5pm"
+    "Fwd: Invoice n. 42 tomorrow at 5pm.>>>"
 
-Now, the little client that I'm writing, `Golemail`, will check your inbox and
+`golemail`, will check your inbox and
 
-- it will recognize your forwarded email
-- it will hide somewhere the forward and the original email
+- it will recognize your forwarded email (by the tag .>>>, which you can configure)
+- it will move in `golemail` folder the forward and the original email
 - tomorrow at 5pm, it will show the original email in your inbox as unread
+
+I'm *really sorry* but, since I'm italian, now this works *only in italian*, so "tomorrow at 5pm" actually is "domani alle 17".
 
 You can also send yourself an email with subject:
 
-    remind me to buy some apples - today at 6pm
+    remind me to buy some apples today at 6pm.>>>
 
 with similar behaviour.
 
-For security reason, there will probably be the needing of a sort of configurable tag to mark email subjects, such as
+If you want to change a reminder, you can open it with your email client from `golemail` folder. You can reply to the message, change the scheduling, send it. It will be updated accordingly.
 
-    remind me to buy some apples - today at 6pm>>>
 
 ###Progress
 
