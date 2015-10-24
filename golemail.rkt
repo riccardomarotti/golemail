@@ -16,10 +16,10 @@
 
 (define (get-password)
   (dynamic-wind
-   (lambda ()
+   (λ()
      (printf (~a "Insert password for " (username) ": ")) (system* "/bin/stty" "-echo" "echonl"))
    read-line
-   (lambda () (system* "/bin/stty" "echo"))))
+   (λ() (system* "/bin/stty" "echo"))))
 
 (command-line
  #:program "golemail"
