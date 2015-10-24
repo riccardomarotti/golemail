@@ -42,10 +42,34 @@ For security reason, there will probably be the needing of a sort of configurabl
 
 ###Progress
 
-The project is still in its very early stage.
+This is the first released version.
 
-A basic client is implemented, and I started using it.
-I plan to release the first usable version by week 43.
+Some important features are missing:
+- english translation (now all "commands" are in italian)
+- recurrent reminders (but you can use a calendar for this)
+- a simple way to view your current reminders (now you have to look at golemail folder)
+
+Anyway, all I need is implemented, so, don't expect these features to be available very soon :)
+
+
+###Install
+
+You need an always on linux machine. I use a small vps, via ssh.
+To install:
+
+- download the latest tgz
+- extract it somewhere
+    tar xvfz golemail-v0.0.1.tgz
+- a `golemail` directory will be created
+- modify `config.json` located in `golemail/bin`
+- you have to create a `golemail` folder in your mailbox (the next version will create it for you and the folder name will be configurable)
+- now you can launch golemail!
+
+`golemail` isn't a daemon yet, so you need a trick to allow the execution not to stop after disconnecting from the remote machine.
+
+I use [tmux](https://tmux.github.io/): after launching golemail, I detach from session.
+You can use nohup as well or whatever you prefer.
+
 
 ###Contacts
 If, for some reasons, you are interested in this project, or have some ideas to make it better, or whatever, please, drop me a line
