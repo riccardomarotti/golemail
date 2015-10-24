@@ -75,3 +75,17 @@ You can use nohup as well or whatever you prefer.
 If, for some reasons, you are interested in this project, or have some ideas to make it better, or whatever, please, drop me a line
 
 riccardo at marotti.xyz
+
+
+License
+-------
+
+Golemail
+Copyright (c) 2015 Riccardo Marotti
+
+Golemail is distributed under the GNU Lesser General Public License
+(LGPL).  This implies that you may link Golemail into proprietary
+applications, provided you follow the rules stated in the LGPL.  You can
+also modify Golemail; if you distribute a modified version, you must
+distribute it under the terms of the LGPL, which in particular states
+that you must release the source code for the modified software.
