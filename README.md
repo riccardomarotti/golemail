@@ -62,8 +62,7 @@ To install:
 - a `golemail` directory will be created
 - modify `config.json` located in `golemail/bin`
 - you have to create a `golemail` folder in your mailbox (the next version will create it for you and the folder name will be configurable)
-- now you can launch golemail!
-    golemail/bin/golemail
+- now you can launch golemail! (`golemail/bin/golemail`)
 
 `golemail` isn't a daemon yet, so you need a trick to allow the execution not to stop after disconnecting from the remote machine.
 
