@@ -41,7 +41,7 @@ If you want to change a reminder, you can open it with your email client from `g
 
 ###Progress
 
-This is the first released version.
+This (0.0.1) is the first released version.
 
 Some important features are missing:
 - english translation (now all "commands" are in italian)
