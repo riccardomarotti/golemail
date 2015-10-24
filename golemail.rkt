@@ -11,7 +11,7 @@
          "schedule.rkt"
          "structures.rkt")
 
-(define version "0.0.1")
+(define version "0.0.2")
 (define show-version (make-parameter #f))
 
 (define (get-password)
