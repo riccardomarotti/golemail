@@ -45,6 +45,7 @@ This (0.0.1) is the first released version.
 
 Some important features are missing:
 - english translation (now all "commands" are in italian)
+- multi email account management
 - recurrent reminders (but you can use a calendar for this)
 - a simple way to view your current reminders (now you have to look at golemail folder)
 
