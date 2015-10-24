@@ -5,7 +5,7 @@ A pet project, that aims to remove Google Inbox from my life :) (and to use a fu
 ###Why?
 
 Google Inbox is a very cool product, and I find that its reminders system, living inside your email, is simple and effective.
-What I really like is that you can delay an email or create a reminder that will appear in you inbox at the moment you scheduled.
+I really like that you can delay an email or create a reminder that will appear in you inbox at the moment you scheduled.
 
 But... you can use it only with a Gmail account.
 
