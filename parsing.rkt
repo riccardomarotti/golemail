@@ -35,9 +35,16 @@
   (define timing-match (regexp-match (timing-regexp) string))
   (cond [(not timing-match) (string-replace string (golem-tag) "")]
         [else
-         (and (regexp-match "^Fwd: *" string) (set! string (string-replace string "Fwd: " "" #:all? #f)))
-         (and (regexp-match "^Re: *" string) (set! string (string-replace string "Re: " "" #:all? #f)))
+         (set! string (remove-propositions string))
          (string-trim (substring string 0 (- (string-length string) (string-length (first timing-match)))))]
         ))
+
+(define (remove-propositions string)
+  (cond [(regexp-match "^Fwd: *" string)
+         (remove-propositions (string-normalize-spaces (string-replace string "Fwd:" "" #:all? #f)))]
+        [(regexp-match "^Re: *" string)
+         (remove-propositions (string-normalize-spaces (string-replace string "Re:" "" #:all? #f)))]
+        [else string]
+  ))
 
 (provide extract-schedule extract-message golem-tag clean)
