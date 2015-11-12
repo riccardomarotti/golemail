@@ -27,10 +27,13 @@
 (define (polling-interval)
   (read-config 'polling-interval))
 
+(define (allowed-senders)
+  (read-config 'allowed-senders))
 
 
 (provide server
          username
          password
          tag
-         polling-interval)
+         polling-interval
+         allowed-senders)
