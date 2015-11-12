@@ -52,8 +52,7 @@
 
 (define (main)
   (define message-reminders-headers (filter-reminders
-                                     (filter-headers-with-same-to-and-from
-                                      (filter-headers-with-from-address (username) (get-headers "Inbox")))))
+                                     (filter-headers-with-from-addresses (allowed-senders) (get-headers "Inbox"))))
 
   (or (empty? message-reminders-headers)
       (let()

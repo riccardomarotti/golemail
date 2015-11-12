@@ -6,25 +6,13 @@
          "../headers-analysis.rkt"
          "../structures.rkt")
 
+(require/expose "../headers-analysis.rkt" (filter-headers-with-from-address))
+
 (define all
   (list
    (test-suite
     "message headers filtering"
     (test-case
-     "filter headers with same from and to address"
-     (define same-sender-and-receiver-header (insert-field #"To" #"Sender <sender@email.it>" (insert-field #"From" #"Sender <sender@email.it>"  (string->bytes/utf-8 empty-header))))
-     (define same-sender-and-receiver-message (message same-sender-and-receiver-header "any body" "any id" "any position"))
-
-     (define another-header (insert-field #"To" #"Sender <sender@email.it>" (insert-field #"From" #"Another Sender <anothersender@email.it>"  (string->bytes/utf-8 empty-header))))
-     (define another-message (message another-header "another body" "any other id" "any position"))
-
-     (define messages (list same-sender-and-receiver-message another-message))
-     (define filtered-messages (filter-headers-with-same-to-and-from messages))
-
-     (check-equal? (length filtered-messages) 1)
-     (check-equal? (car filtered-messages) same-sender-and-receiver-message))
-
-    (test-case
      "filter headers from a particular address"
      (define header-from-sender (insert-field #"To" #"Sender <sender@email.it>" (insert-field #"From" #"Sender <sender@email.it>"  (string->bytes/utf-8 empty-header))))
      (define message-from-sender (message header-from-sender "any body" "any id" "any position"))
@@ -47,6 +35,20 @@
 
      (check-equal? (length filtered-messages) 1)
      (check-equal? (car filtered-messages) message-from-sender))
+
+    (test-case
+     "filter headers from a list of addresses"
+     (define header-from-allowed-sender (insert-field #"To" #"Sender <sender@email.it>" (insert-field #"From" #"Sender <allowed-sender@email.it>" (string->bytes/utf-8 empty-header))))
+     (define message-from-allowed-sender (message header-from-allowed-sender "any body" "any id" "any position"))
+     (define header-from-another-allowed-sender (insert-field #"To" #"Sender <sender@email.it>" (insert-field #"From" #"Another Sender <another-allowed-sender@email.it>"  (string->bytes/utf-8 empty-header))))
+     (define message-from-another-allowed-sender (message header-from-another-allowed-sender "any other body" "any other id" "any other position"))
+     (define header-from-a-not-allowed-sender (insert-field #"To" #"Sender <sender@email.it>" (insert-field #"From" #"Another Sender <anothersender@email.it>"  (string->bytes/utf-8 empty-header))))
+     (define message-from-a-not-allowed-sender (message header-from-a-not-allowed-sender "any other body" "any other id" "any other position"))
+     (define messages (list message-from-allowed-sender message-from-a-not-allowed-sender message-from-another-allowed-sender))
+     (define filtered-messages (filter-headers-with-from-addresses '("allowed-sender@email.it" "another-allowed-sender@email.it") messages))
+
+     (check-equal? (length filtered-messages) 2)
+     (check-equal? filtered-messages (list message-from-allowed-sender message-from-another-allowed-sender)))
 
     (test-case
      "filter reminders"
