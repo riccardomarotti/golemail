@@ -1,0 +1,19 @@
+#!/usr/bin/env sh
+
+raco test tests
+
+if [ $? != 0 ]
+then
+    echo "Build failed!"
+    exit 1
+fi
+
+RELEASE_DIR=release
+rm -rf $RELEASE_DIR
+mkdir $RELEASE_DIR
+
+echo "Creating golemail..."
+raco exe golemail.rkt
+raco distribute $RELEASE_DIR/golemail golemail
+rm golemail
+echo "Done!"
