@@ -1,6 +1,4 @@
-# Golemail #
-
-## ([Golem](https://en.wikipedia.org/wiki/Golem) + [Email](https://en.wikipedia.org/wiki/Email)) ##
+# Golemail ([Golem](https://en.wikipedia.org/wiki/Golem) + [Email](https://en.wikipedia.org/wiki/Email)) #
 
 A pet project, that  aims to remove Google Inbox from  my life :) (and
 to use a functional language)
