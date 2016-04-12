@@ -3,10 +3,10 @@
 (require rackunit
          rackunit/text-ui
          net/head
-         "../headers-analysis.rkt"
-         "../structures.rkt")
+         "../golemail/headers-analysis.rkt"
+         "../golemail/structures.rkt")
 
-(require/expose "../headers-analysis.rkt" (filter-headers-with-from-address))
+(require/expose "../golemail/headers-analysis.rkt" (filter-headers-with-from-address))
 
 (define all
   (list
