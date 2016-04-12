@@ -50,7 +50,7 @@
 
 
 
-(define (main)
+(define (main _)
   (define message-reminders-headers (filter-reminders
                                      (filter-headers-with-from-addresses (allowed-senders) (get-headers "Inbox"))))
 

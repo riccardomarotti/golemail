@@ -1,6 +1,7 @@
 #lang racket
 
-(require racket/cmdline
+(require racket/engine
+         racket/cmdline
          racket/system
          "client.rkt"
          "configuration.rkt"
@@ -27,12 +28,14 @@
  [("--version") "Show version"
                 (show-version #t)])
 
+(define check_engine (engine main))
+
 (cond [(show-version)
        (displayln (~a "golemail version " version))]
       [else
        (password (get-password))
        (let loop()
-         (thread-wait (thread main))
+         (engine-run 20000 check_engine)
          (collect-garbage)
          (sleep (polling-interval))
          (loop))]
