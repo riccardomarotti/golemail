@@ -4,4 +4,8 @@ before_install:
 install:
   - wget https://mirror.racket-lang.org/installers/6.4/racket-6.4-x86_64-linux-ubuntu-precise.sh
   - sudo sh racket-6.4-x86_64-linux-ubuntu-precise.sh --unix-style --dest /usr/local/
+  - raco pkg install --deps search-auto $TRAVIS_BUILD_DIR
+  - raco pkg install cover-codecov
 script: ./build
+after_success:
+  - raco cover -f coveralls client.rkt configuration.rkt imap-access.rkt parsing.rkt reminders.rkt schedule.rkt structures.rkt
