@@ -1,4 +1,4 @@
 language: racket
 install:
-  - sudo apt-get install racket
+  - sudo apt-get -y install racket
 script: ./build
