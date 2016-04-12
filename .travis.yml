@@ -4,7 +4,7 @@ before_install:
 install:
   - wget https://mirror.racket-lang.org/installers/6.4/racket-6.4-x86_64-linux-ubuntu-precise.sh
   - sudo sh racket-6.4-x86_64-linux-ubuntu-precise.sh --unix-style --dest /usr/local/
-  - raco pkg install --deps search-auto cover-codecov
+  - raco pkg install --deps search-auto cover-coveralls
 script: ./build
 after_success:
   - raco cover -f coveralls golemail/
