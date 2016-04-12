@@ -1,7 +1,12 @@
 {
-	"server": "",
-	"username": "",
+	"server": "test-imap-sender",
+	"username": "an-email",
 	"port": 993,
 	"tag": ".>>>",
-	"polling-interval": 30
+	"polling-interval": 987,
+	"allowed-senders":
+	[
+		"email1@server.com",
+		"email2@server.com"
+	]
 }
