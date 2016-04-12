@@ -4,4 +4,4 @@ before_install:
 install:
   - wget https://mirror.racket-lang.org/installers/6.4/racket-6.4-x86_64-linux-ubuntu-precise.sh
   - sudo sh racket-6.4-x86_64-linux-ubuntu-precise.sh --unix-style --dest /usr/local/
-script: raco test tests
+script: ./build
