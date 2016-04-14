@@ -2,7 +2,7 @@
 
 (require rackunit
          rackunit/text-ui
-         "../golemail/configuration.rkt")
+         "../core/configuration.rkt")
 
 (define all
   (list

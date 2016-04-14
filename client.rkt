@@ -1,10 +1,10 @@
 #lang racket
 
-(require "imap-access.rkt"
-         "headers-analysis.rkt"
-         "reminders.rkt"
-         "configuration.rkt"
-         "structures.rkt"
+(require "core/imap-access.rkt"
+         "core/headers-analysis.rkt"
+         "core/reminders.rkt"
+         "core/configuration.rkt"
+         "core/structures.rkt"
          net/head
          )
 

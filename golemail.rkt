@@ -2,14 +2,14 @@
 
 (require racket/cmdline
          racket/system
-         "golemail/client.rkt"
-         "golemail/configuration.rkt"
-         "golemail/headers-analysis.rkt"
-         "golemail/imap-access.rkt"
-         "golemail/parsing.rkt"
-         "golemail/reminders.rkt"
-         "golemail/schedule.rkt"
-         "golemail/structures.rkt")
+         "client.rkt"
+         "core/configuration.rkt"
+         "core/headers-analysis.rkt"
+         "core/imap-access.rkt"
+         "core/parsing.rkt"
+         "core/reminders.rkt"
+         "core/schedule.rkt"
+         "core/structures.rkt")
 
 (define version "0.0.2")
 (define show-version (make-parameter #f))

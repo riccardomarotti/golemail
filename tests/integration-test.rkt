@@ -2,8 +2,8 @@
 
 (require rackunit
          rackunit/text-ui
-         "../golemail/schedule.rkt"
-         "../golemail/parsing.rkt")
+         "../core/schedule.rkt"
+         "../core/parsing.rkt")
 
 (define all
   (list

@@ -3,8 +3,8 @@
 (require rackunit
          rackunit/text-ui
          net/head
-         "../golemail/structures.rkt"
-         "../golemail/reminders.rkt")
+         "../core/structures.rkt"
+         "../core/reminders.rkt")
 
 (define all
   (list
