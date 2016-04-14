@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/riccardomarotti/golemail.svg?branch=master)](https://travis-ci.org/riccardomarotti/golemail)
+[![Coverage Status](https://coveralls.io/repos/github/riccardomarotti/golemail/badge.svg?branch=master)](https://coveralls.io/github/riccardomarotti/golemail?branch=master)
 
 # Golemail ([Golem](https://en.wikipedia.org/wiki/Golem) + [Email](https://en.wikipedia.org/wiki/Email)) #
 
