@@ -1,12 +1,14 @@
+[![License LGPL](https://img.shields.io/badge/license-LGPL-brightgreen.svg)](http://www.gnu.org/licenses/lgpl-3.0.txt)
 [![Build Status](https://travis-ci.org/riccardomarotti/golemail.svg?branch=master)](https://travis-ci.org/riccardomarotti/golemail)
 [![Coverage Status](https://coveralls.io/repos/github/riccardomarotti/golemail/badge.svg?branch=master)](https://coveralls.io/github/riccardomarotti/golemail?branch=master)
+
 
 # Golemail ([Golem](https://en.wikipedia.org/wiki/Golem) + [Email](https://en.wikipedia.org/wiki/Email)) #
 
 A pet project, that  aims to remove Google Inbox from  my life :) (and
 to use a functional language)
 
-###Why?
+### Why?
 
 Google Inbox  is a very  cool product, and  I find that  its reminders
 system, living inside  your email, is simple and  effective.  I really
@@ -16,7 +18,7 @@ in you inbox at the moment you scheduled.
 But... you can use it only with a Gmail account.
 
 
-###How it works?
+### How it works?
 
 When you receive an email that you can't manage now, you forward it to
 yourself, and you  append a tag to the subject  where you specify when
@@ -53,7 +55,7 @@ client from  `golemail` folder. You  can reply to the  message, change
 the scheduling, send it. It will be updated accordingly.
 
 
-###Progress
+### Progress
 
 This (0.0.1) is the first released version.
 
@@ -68,7 +70,7 @@ Anyway, all I need is implemented,  so, don't expect these features to
 be available very soon :)
 
 
-###Install
+### Install
 
 You need an always  on linux machine. I use a small  vps, via ssh.  To
 install:
@@ -91,7 +93,7 @@ detach  from session.   You  can use  nohup as  well  or whatever  you
 prefer.
 
 
-###Contacts
+### Contacts
 
 If, for some reasons, you are interested in this project, or have some
 ideas to make it better, or whatever, please, drop me a line
