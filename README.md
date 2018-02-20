@@ -98,7 +98,7 @@ prefer.
 If, for some reasons, you are interested in this project, or have some
 ideas to make it better, or whatever, please, drop me a line
 
-riccardo at marotti.xyz
+riccardomarotti at gmail
 
 
 License
